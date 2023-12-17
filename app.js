@@ -39,7 +39,9 @@ app.get('/users/logout', (req, res) => {
   res.send('logout lo ^_^')
 })
 
-// homepage
+// browse
+
+
 app.get('/', (req, res) => {
   return Todo.findAll({
     raw: true,
