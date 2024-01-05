@@ -3,9 +3,10 @@ const exphbs = require('express-handlebars')
 const methodOverride = require('method-override')
 const bcrypt = require('bcryptjs')
 const session = require('express-session')
-// 載入passport設定檔，要寫在 express-session 以後
-const passport = require('passport')
-const usePassport = require('./config/passport')
+const passport = require('./config/passport')
+
+const flash = require('connect-flash')
+const { authenticator } = require('../todo-sequelize2/middleware/auth') // 掛載 auth
 
 const app = express()
 const PORT = 3000
@@ -25,27 +26,38 @@ app.use(session({
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
-// 呼叫 Passport 函式並傳入 app，這條要寫在路由之前
-usePassport(app)
+// 初始化 Passport 及 啟動處理session功能
+app.use(passport.initialize())
+app.use(passport.session())
 
+// setting flash-message
+app.use(flash())
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.isAuthenticated()
+  res.locals.user = req.user
+  res.locals.success_msg = req.flash('success_msg')
+  res.locals.warning_msg = req.flash('warning_msg')
+  next()
+})
 
 // login
 app.get('/users/login', (req, res) => {
-  res.render('login')
+  res.render('/users/login')
 })
-// login route 加入 middleware，驗證 reqest 登入狀態
 app.post('/users/login', passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/users/login'
-}))
-
+  failureRedirect: '/users/login', failureFlash: true
+}), function (req, res) {
+  req.flash('success_messages', '成功登入！')
+  res.redirect('/')
+})
 
 // register
 app.get('/users/register', (req, res) => {
   res.render('register')
 })
 app.post('/users/register', (req, res) => {
-  const { name, email, password, confirmingPassword } = req.body
+  // eslint-disable-next-line no-unused-vars
+  const { name, email, password, confirmPassword } = req.body
   User.findOne({ where: { email } }).then(user => {
     if (user) {
       console.log('User already exists')
@@ -71,7 +83,9 @@ app.post('/users/register', (req, res) => {
 
 // logout
 app.get('/users/logout', (req, res) => {
-  res.send('logout lo ^_^')
+  req.logout()
+  req.flash('success_msg', '你已經成功登出。')
+  res.redirect('/users/login')
 })
 
 // browse
@@ -82,15 +96,14 @@ app.get('/todos/:id', (req, res) => {
     .catch(error => console.log(error))
 })
 
-app.get('/', (req, res) => {
+app.get('/', authenticator, (req, res) => {
   return Todo.findAll({
     raw: true,
     nest: true
   })
-    .then((todos) => { return res.render('index', { todos: todos }) })
+    .then((todos) => { return res.render('index', { todos }) })
     .catch((error) => { return res.status(422).json(error) })
 })
-
 
 app.listen(PORT, () => {
   console.log(`App is running on http://localhost:${PORT}`)

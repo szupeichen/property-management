@@ -1,34 +1,35 @@
 const passport = require('passport')
-const LocalStrategy = require('passport-local').Strategy
+const LocalStrategy = require('passport-local')
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const User = db.User
-module.exports = app => {
-  app.use(passport.initialize())
-  app.use(passport.session())
-  passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
+// set up Passport strategy
+passport.use(new LocalStrategy(
+  // customize user field
+  {
+    usernameField: 'email',
+    passwordField: 'password',
+    passReqToCallback: true
+  },
+  // authenticate user
+  (req, email, password, cb) => {
     User.findOne({ where: { email } })
       .then(user => {
-        if (!user) {
-          return done(null, false, { message: 'That email is not registered!' })
-        }
-        return bcrypt.compare(password, user.password).then(isMatch => {
-          if (!isMatch) {
-            return done(null, false, { message: 'Email or Password incorrect.' })
-          }
-          return done(null, user)
+        if (!user) return cb(null, false, req.flash('warning_msg', '帳號或密碼輸入錯誤！'))
+        bcrypt.compare(password, user.password).then(res => {
+          if (!res) return cb(null, false, req.flash('warning_msg', '帳號或密碼輸入錯誤！'))
+          return cb(null, user)
         })
       })
-      .catch(err => done(err, false))
-  }))
-  passport.serializeUser((user, done) => {
-    done(null, user.id)
+  }
+))
+// serialize and deserialize user
+passport.serializeUser((user, cb) => {
+  cb(null, user.id)
+})
+passport.deserializeUser((id, cb) => {
+  User.findByPk(id).then(user => {
+    return cb(null, user)
   })
-  passport.deserializeUser((id, done) => {
-    User.findByPk(id)
-      .then((user) => {
-        user = user.toJSON()
-        done(null, user)
-      }).catch(err => done(err, null))
-  })
-}
+})
+module.exports = passport

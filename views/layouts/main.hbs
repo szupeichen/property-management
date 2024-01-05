@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Todo List</title>
+  <title>房產租賃管理系統</title>
   <link href="https://bootswatch.com/5/united/bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -12,13 +12,13 @@
   <header>
     <nav class="navbar navbar-dark bg-primary justify-content-between py-2 px-4">
       <a class="navbar-brand" href="/">
-        {{#if isAuthenticated}}{{ user.name}}'s {{/if}}
-        Todo List
+        房產租賃管理系統
+        {{#if isAuthenticated}} Hi!{{ user.name }} {{/if}}
+        {{#if isAuthenticated}}
       </a>
-      {{#if isAuthenticated}}
-      <a href="/users/logout" class="btn btn-outline-light">Logout</a>
+      <a href="/users/logout" class="btn btn-outline-light">Log out</a>
       {{else}}
-      <a href="/users/login" class="btn btn-outline-light">Login</a>
+      <a href="/users/login" class="btn btn-outline-light">Log in</a>
       {{/if}}
     </nav>
   </header>
