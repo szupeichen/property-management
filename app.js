@@ -1,5 +1,7 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
+const Handlebars = require('handlebars')
+const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
 const methodOverride = require('method-override')
 const bcrypt = require('bcryptjs')
 const session = require('express-session')
@@ -15,7 +17,7 @@ const db = require('./models')
 const Todo = db.Todo
 const User = db.User
 
-app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
+app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs', handlebars: allowInsecurePrototypeAccess(Handlebars) }))
 app.set('view engine', 'hbs')
 
 app.use(session({
@@ -42,7 +44,7 @@ app.use((req, res, next) => {
 
 // login
 app.get('/users/login', (req, res) => {
-  res.render('/users/login')
+  res.render('login')
 })
 app.post('/users/login', passport.authenticate('local', {
   failureRedirect: '/users/login', failureFlash: true
@@ -96,7 +98,7 @@ app.get('/todos/:id', (req, res) => {
     .catch(error => console.log(error))
 })
 
-app.get('/', authenticator, (req, res) => {
+app.get('/', (req, res) => {
   return Todo.findAll({
     raw: true,
     nest: true
