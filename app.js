@@ -1,7 +1,9 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
+// 解決handlebars denied access property
 const Handlebars = require('handlebars')
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
+
 const methodOverride = require('method-override')
 const bcrypt = require('bcryptjs')
 const session = require('express-session')
@@ -42,6 +44,7 @@ app.use((req, res, next) => {
   next()
 })
 
+// API
 // login
 app.get('/users/login', (req, res) => {
   res.render('login')
@@ -90,7 +93,7 @@ app.get('/users/logout', (req, res) => {
   res.redirect('/users/login')
 })
 
-// browse
+// read
 app.get('/todos/:id', (req, res) => {
   const id = req.params.id
   return Todo.findByPk(id)

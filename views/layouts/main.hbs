@@ -9,8 +9,8 @@
 </head>
 
 <body class="bg-light">
-  <header>
-    <nav class="navbar navbar-dark bg-primary justify-content-between py-2 px-4">
+  {{!-- <header> --}}
+    {{!-- <nav class="navbar navbar-dark bg-primary justify-content-between py-2 px-4">
       <a class="navbar-brand" href="/">
         房產租賃管理系統
         {{#if isAuthenticated}} Hi!{{ user.name }} {{/if}}
@@ -20,8 +20,9 @@
       {{else}}
       <a href="/users/login" class="btn btn-outline-light">Log in</a>
       {{/if}}
-    </nav>
-  </header>
+    </nav> --}}
+  {{!-- </header> --}}
+  {{> header}}
   <main>
     <div class="container mt-3">
       {{{ body }}}
