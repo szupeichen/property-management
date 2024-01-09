@@ -3,6 +3,9 @@ const exphbs = require('express-handlebars')
 // 解決handlebars denied access property
 const Handlebars = require('handlebars')
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
+// handlebars-helpers
+const handlebarsHelpers = require('./helpers/handlebars-helpers')
+const { getUser } = require('./helpers/auth-helpers')
 
 const methodOverride = require('method-override')
 const bcrypt = require('bcryptjs')
@@ -19,7 +22,7 @@ const db = require('./models')
 const Todo = db.Todo
 const User = db.User
 
-app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs', handlebars: allowInsecurePrototypeAccess(Handlebars) }))
+app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs', handlebars: allowInsecurePrototypeAccess(Handlebars), helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
 
 app.use(session({
@@ -38,7 +41,7 @@ app.use(passport.session())
 app.use(flash())
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.isAuthenticated()
-  res.locals.user = req.user
+  res.locals.user = getUser(req)
   res.locals.success_msg = req.flash('success_msg')
   res.locals.warning_msg = req.flash('warning_msg')
   next()
