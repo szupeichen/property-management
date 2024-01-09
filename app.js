@@ -15,8 +15,12 @@ const passport = require('./config/passport')
 const flash = require('connect-flash')
 const { authenticator } = require('../todo-sequelize2/middleware/auth') // 掛載 auth
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
+
 const app = express()
-const PORT = 3000
+const PORT = process.env.PORT
 
 const db = require('./models')
 const Todo = db.Todo
@@ -26,7 +30,7 @@ app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs', handlebars: a
 app.set('view engine', 'hbs')
 
 app.use(session({
-  secret: 'ThisIsMySecret',
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }))
@@ -114,5 +118,5 @@ app.get('/', (req, res) => {
 })
 
 app.listen(PORT, () => {
-  console.log(`App is running on http://localhost:${PORT}`)
+  console.log(`App is running on http://localhost:${process.env.PORT}`)
 })
