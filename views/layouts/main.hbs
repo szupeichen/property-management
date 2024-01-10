@@ -15,24 +15,10 @@
 </head>
 
 <body class="d-flex flex-column h-100 bg-light">
-  {{!-- <header> --}}
-    {{!-- <nav class="navbar navbar-dark bg-primary justify-content-between py-2 px-4">
-      <a class="navbar-brand" href="/">
-        房產租賃管理系統
-        {{#if isAuthenticated}} Hi!{{ user.name }} {{/if}}
-        {{#if isAuthenticated}}
-      </a>
-      <a href="/users/logout" class="btn btn-outline-light">Log out</a>
-      {{else}}
-      <a href="/users/login" class="btn btn-outline-light">Log in</a>
-      {{/if}}
-    </nav> --}}
-    {{!-- </header> --}}
   {{> header}}
   <main class="flex-shrink-0" role="main">
     <div class="album container pt-5">
-      <div class="pt-5">
-        {{> message}}
+      <div class="pt-5">        
         {{{ body }}}
       </div>
     </div>
