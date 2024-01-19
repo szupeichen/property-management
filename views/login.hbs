@@ -6,11 +6,11 @@
       <form action="/users/login" method="POST">
         <div class="mb-3">
           <label for="email" class="form-label">Email</label>
-          <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email">
+          <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email" value="{{ email }}" >
         </div>
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
-          <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password">
+          <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password" value="{{ password }}">
         </div>
         <div class="d-flex align-items-center mb-4">
           <input class="me-1" type="checkbox" name="rememberUser">

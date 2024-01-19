@@ -6,6 +6,7 @@ const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-ac
 // handlebars-helpers
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
 const { getUser } = require('./helpers/auth-helpers')
+// const { sessionHelp } = require('./helpers/session-helpers')
 
 const methodOverride = require('method-override')
 const bcrypt = require('bcryptjs')
@@ -54,11 +55,21 @@ app.use((req, res, next) => {
 // API
 // login
 app.get('/users/login', (req, res) => {
-  res.render('login')
+  const session = req.session
+  if (session.savedEmail !== '') {
+    res.render('login', { email: session.savedEmail })
+  } else {
+    res.render('login')
+  }
 })
+
 app.post('/users/login', passport.authenticate('local', {
   failureRedirect: '/users/login', failureFlash: true
 }), function (req, res) {
+  const session = req.session
+  if (req.body.rememberUser === 'on') {
+    session.savedEmail = req.user.email || ''
+  }
   req.flash('success_messages', '成功登入！')
   res.redirect('/')
 })
@@ -68,7 +79,6 @@ app.get('/users/register', (req, res) => {
   res.render('register')
 })
 app.post('/users/register', (req, res) => {
-  // eslint-disable-next-line no-unused-vars
   const { name, email, password, confirmPassword } = req.body
   User.findOne({ where: { email } }).then(user => {
     if (user) {
