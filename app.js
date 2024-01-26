@@ -118,7 +118,7 @@ app.get('/todos/:id', (req, res) => {
     .catch(error => console.log(error))
 })
 
-app.get('/', (req, res) => {
+app.get('/', authenticator, (req, res) => {
   return Todo.findAll({
     raw: true,
     nest: true
