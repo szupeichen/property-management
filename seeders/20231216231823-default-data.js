@@ -16,12 +16,12 @@ module.exports = {
     }], {})
       .then(userId => queryInterface.bulkInsert('Todos',
         Array.from({ length: 10 }).map((_, i) =>
-        ({
-          name: `name-${i}`,
-          UserId: userId,
-          createdAt: new Date(),
-          updatedAt: new Date()
-        })
+          ({
+            name: `中正路-${i}號`,
+            UserId: userId,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          })
         ), {}))
   },
   down: (queryInterface, Sequelize) => {

@@ -1,24 +1,46 @@
-{{> message}}
 <a href="/todos/new" class="btn btn-warning mb-3">新增任務</a>
-<ul class="list-group">
-  {{> message}}
-  {{#each todos}}
-  <li class="list-group-item">
-    <div class="row">
-      <div class="col-auto me-auto">
-        <input class="align-middle" type="checkbox" name="isDone" {{#if this.isDone }} checked {{/if}} disabled>
-        <h4 class="d-inline ms-2 align-middle">
-          {{ this.name }}
-        </h4>
-      </div>
-      <div class="col-auto">
-        <a class="btn btn-secondary" href="./todos/{{ this.id }}">detail</a>
-        <a class="btn btn-success" href="./todos/{{ this.id }}/edit">edit</a>
+<table class="table">
+  <thead>
+    <tr class="table-secondary">
+      <th scope="col">地點</th>
+      <th scope="col">租約訖日</th>
+      <th scope="col">租客</th>
+      <th scope="col">服務仲介</th>
+      <th scope="col">狀態</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each todos}}
+    <tr class="list-group-item">
+
+      <td scope="col">{{ this.address }}</td>
+      <th scope="col">{{ this.endDate }}</th>
+      <th scope="col">{{ this.name }}</th>
+      <th scope="col">{{ this.agency }}</th>
+      <th scope="col">{{ this.status }}</th>
+      <th>
+        <a class="btn btn-outline-secondary" href="./todos/{{ this.id }}">detail</a>
+        <a class="btn btn-outline-warning" href="./todos/{{ this.id }}/edit">edit</a>
+        {{#if admin}}
         <form action="./todos/{{ this.id }}?_method=DELETE" method="POST" style="display: inline;">
           <button class="btn btn-danger" type="submit">delete</button>
         </form>
-      </div>
-    </div>
-  </li>
-  {{/each}}
-</ul>
+        {{/if}}
+      </th>
+      {{!--
+      <div class="row">
+        <div class="col-auto me-auto">
+          <input class="align-middle" type="checkbox" name="isDone" {{#if this.isDone }} checked {{/if}}>
+          <h4 class="d-inline ms-2 align-middle">
+
+          </h4>
+        </div>
+        <div class="col-auto">
+
+        </div>
+      </div> --}}
+    </tr>
+    {{/each}}
+
+  </tbody>
+</table>
