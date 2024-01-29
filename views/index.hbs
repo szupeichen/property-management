@@ -14,11 +14,11 @@
     <tr class="list-group-item">
 
       <td scope="col">{{ this.address }}</td>
-      <th scope="col">{{ this.endDate }}</th>
-      <th scope="col">{{ this.name }}</th>
-      <th scope="col">{{ this.agency }}</th>
-      <th scope="col">{{ this.status }}</th>
-      <th>
+      <td scope="col">{{ this.endDate }}</td>
+      <td scope="col">{{ this.name }}</td>
+      <td scope="col">{{ this.agency }}</td>
+      <td scope="col">{{ this.status }}</td>
+      <td>
         <a class="btn btn-outline-secondary" href="./todos/{{ this.id }}">detail</a>
         <a class="btn btn-outline-warning" href="./todos/{{ this.id }}/edit">edit</a>
         {{#if admin}}
@@ -26,7 +26,7 @@
           <button class="btn btn-danger" type="submit">delete</button>
         </form>
         {{/if}}
-      </th>
+      </td>
       {{!--
       <div class="row">
         <div class="col-auto me-auto">
