@@ -5,24 +5,24 @@ module.exports = {
     await queryInterface.bulkInsert('Users', [{
       email: 'root@example.com',
       password: await bcrypt.hash('12345678', 10),
-      is_admin: true,
+      isAdmin: true,
       name: 'root',
-      created_at: new Date(),
-      updated_at: new Date()
+      createdAt: new Date(),
+      updatedAt: new Date()
     }, {
       email: 'user1@example.com',
       password: await bcrypt.hash('12345678', 10),
-      is_admin: false,
+      isAdmin: false,
       name: 'user1',
-      created_at: new Date(),
-      updated_at: new Date()
+      createdAt: new Date(),
+      updatedAt: new Date()
     }, {
       email: 'user2@example.com',
       password: await bcrypt.hash('12345678', 10),
-      is_admin: false,
+      isAdmin: false,
       name: 'user2',
-      created_at: new Date(),
-      updated_at: new Date()
+      createdAt: new Date(),
+      updatedAt: new Date()
     }], {})
   },
   down: async (queryInterface, Sequelize) => {
