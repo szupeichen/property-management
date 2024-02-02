@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('Users', [{
+    return queryInterface.bulkInsert('Agency', [{
       name: SEED_USER.name,
       email: SEED_USER.email,
       password: bcrypt.hashSync(SEED_USER.password, bcrypt.genSaltSync(10), null),
