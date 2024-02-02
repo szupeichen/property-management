@@ -12,16 +12,18 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate (models) {
       // define association here
-      User.hasMany(models.Todo)
+      // User.hasMany(models.Todo)
     }
   }
   User.init({
     name: DataTypes.STRING,
     email: DataTypes.STRING,
-    password: DataTypes.STRING
+    password: DataTypes.STRING,
+    isAdmin: DataTypes.BOOLEAN
   }, {
     sequelize,
-    modelName: 'User'
+    modelName: 'User',
+    underscored: true
   })
   return User
 }

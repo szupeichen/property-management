@@ -1,10 +1,6 @@
 'use strict'
-const bcrypt = require('bcryptjs')
-const SEED_USER = {
-  name: 'root',
-  email: 'root@example.com',
-  password: '12345678'
-}
+
+/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('Users', [{

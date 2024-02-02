@@ -24,7 +24,7 @@ const app = express()
 const PORT = process.env.PORT
 
 const db = require('./models')
-const Todo = db.Todo
+const Unit = db.Unit
 const User = db.User
 
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs', handlebars: allowInsecurePrototypeAccess(Handlebars), helpers: handlebarsHelpers }))
@@ -113,18 +113,20 @@ app.get('/users/logout', (req, res) => {
 // read
 app.get('/todos/:id', (req, res) => {
   const id = req.params.id
-  return Todo.findByPk(id)
+  return Unit.findByPk(id)
     .then(todo => res.render('detail', { todo: todo.toJSON() }))
     .catch(error => console.log(error))
 })
 
 app.get('/', authenticator, (req, res) => {
-  return Todo.findAll({
+  console.log('message from root')
+  return Unit.findAll({
     raw: true,
     nest: true
   })
-    .then((todos) => { return res.render('index', { todos }) })
-    .catch((error) => { return res.status(422).json(error) })
+    .then((units) => { return res.render('index', { units }) })
+    .catch((error) => { console.log(error) })
+    // .catch((error) => { return res.status(422).json(error) })
 })
 
 app.listen(PORT, () => {
