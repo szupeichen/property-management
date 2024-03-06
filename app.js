@@ -1,7 +1,7 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
-// 解決handlebars denied access property
 const Handlebars = require('handlebars')
+// 解決handlebars因為改善資安漏洞的denied access property
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
 // handlebars-helpers
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
@@ -12,9 +12,10 @@ const methodOverride = require('method-override')
 const bcrypt = require('bcryptjs')
 const session = require('express-session')
 const passport = require('./config/passport')
-
 const flash = require('connect-flash')
-const { authenticator } = require('../todo-sequelize2/middleware/auth') // 掛載 auth
+
+// 掛載 auth
+const { authenticator } = require('../todo-sequelize2/middleware/auth')
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
@@ -125,8 +126,7 @@ app.get('/', authenticator, (req, res) => {
     nest: true
   })
     .then((units) => { return res.render('index', { units }) })
-    .catch((error) => { console.log(error) })
-    // .catch((error) => { return res.status(422).json(error) })
+    .catch((error) => { return res.status(422).json(error) })
 })
 
 app.listen(PORT, () => {

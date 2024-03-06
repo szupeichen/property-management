@@ -21,6 +21,9 @@ passport.use(new LocalStrategy(
           return cb(null, user)
         })
       })
+      .catch(error => {
+        console.error('查詢用戶時出錯(at passport.js):', error)
+      })
   }
 ))
 // serialize and deserialize user
