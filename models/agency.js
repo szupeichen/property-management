@@ -20,7 +20,9 @@ module.exports = (sequelize, DataTypes) => {
     company: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'Agency'
+    modelName: 'Agency',
+    tableName: 'Agencies',
+    underscored: true
   })
   return Agency
 }
