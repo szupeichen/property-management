@@ -15,7 +15,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Unit.init({
-    name: DataTypes.STRING,
     address: DataTypes.STRING,
     startDate: DataTypes.DATE,
     endDate: DataTypes.DATE,
