@@ -12,17 +12,17 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      phoneNumber: {
+      phone_number: {
         type: Sequelize.STRING
       },
       company: {
         type: Sequelize.STRING
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE
       }
