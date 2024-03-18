@@ -25,6 +25,7 @@ const app = express()
 const PORT = process.env.PORT
 
 const db = require('./models')
+const Agency = db.Agency
 const Unit = db.Unit
 const User = db.User
 
@@ -120,12 +121,12 @@ app.get('/todos/:id', (req, res) => {
 })
 
 app.get('/', authenticator, (req, res) => {
-  console.log('message from root')
   return Unit.findAll({
     raw: true,
-    nest: true
+    nest: true,
+    include: [Agency]
   })
-    .then((units) => { return res.render('index', { units }) })
+    .then((units) => { console.log(units);return res.render('index', { units }) })
     .catch((error) => { return res.status(422).json(error) })
 })
 

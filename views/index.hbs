@@ -1,23 +1,22 @@
 <a href="/todos/new" class="btn btn-warning mb-3">新增任務</a>
 <table class="table">
-  <thead>
+  <thead class="table-dark">
     <tr class="table-secondary">
       <th scope="col">地點</th>
       <th scope="col">租約訖日</th>
-      <th scope="col">租客</th>
       <th scope="col">服務仲介</th>
       <th scope="col">狀態</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
-    {{#each units}}
-    <tr class="list-group-item">
 
-      <td scope="col">{{ this.address }}</td>
-      <td scope="col">{{ this.endDate }}</td>
-      <td scope="col">{{ this.name }}</td>
-      <td scope="col">{{ this.agency }}</td>
-      <td scope="col">{{ this.status }}</td>
+    {{#each units}}
+    <tr>
+      <td scope="col" class="">{{ this.address }}</td>
+      <td scope="col">{{formatDate this.endDate}}</td>
+      <td scope="col">{{ this.Agency.name }}</td>
+      <td scope="col">{{#if this.status }}已出租{{else}}未出租{{/if}}</td>
       <td>
         <a class="btn btn-outline-secondary" href="./todos/{{ this.id }}">detail</a>
         <a class="btn btn-outline-warning" href="./todos/{{ this.id }}/edit">edit</a>
@@ -26,19 +25,7 @@
           <button class="btn btn-danger" type="submit">delete</button>
         </form>
         {{/if}}
-      </td>
-      {{!--
-      <div class="row">
-        <div class="col-auto me-auto">
-          <input class="align-middle" type="checkbox" name="isDone" {{#if this.isDone }} checked {{/if}}>
-          <h4 class="d-inline ms-2 align-middle">
-
-          </h4>
-        </div>
-        <div class="col-auto">
-
-        </div>
-      </div> --}}
+      </td>     
     </tr>
     {{/each}}
 
