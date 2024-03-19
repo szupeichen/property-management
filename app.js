@@ -121,6 +121,10 @@ app.get('/units/:id', (req, res) => {
     .catch(error => console.log(error))
 })
 
+app.get('/units/:id/edit', (req, res) => {
+  res.render('detail')
+})
+
 app.get('/', authenticator, (req, res) => {
   return Unit.findAll({
     raw: true,

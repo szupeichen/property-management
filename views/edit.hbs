@@ -1,0 +1,27 @@
+<a href="/" class="btn btn-warning mb-3 me-3 row">回上頁</a>
+
+
+<table class="table w-100">
+  <form action="/units/:id/edit" method="POST">
+    <tr class="table-secondary row">
+      <th class="col-4">
+        <input type="text">
+        地址：{{units.address}}</th>
+      <th class="col-8">租金：{{units.revenue}}</th>
+    </tr>
+    <tr class="row">
+      <td class="col-4">租約起日：{{formatDate units.startDate}}</td>
+      <td class="col-4">租約訖日：{{formatDate units.endDate}}</td>
+      <td class="col-4">出租狀態：{{#if units.status }}已出租{{else}}未出租{{/if}}</td>
+    </tr>
+    <tr class="row">
+      <td class="col-4">服務仲介：{{units.Agency.name}}</td>
+      <td class="col-4">仲介公司：{{units.Agency.company}}</td>
+      <td class="col-4">聯絡電話：{{units.Agency.phoneNumber}}</td>
+    </tr>
+    <tr class="row">
+      <td>備註：{{units.note}}</td>
+    </tr>
+    <button class="btn btn-danger" type="submit">儲存</button>
+  </form>
+</table>
