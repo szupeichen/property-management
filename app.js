@@ -5,17 +5,19 @@ const Handlebars = require('handlebars')
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
 // handlebars-helpers
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
+// auth-helpers
 const { getUser } = require('./helpers/auth-helpers')
 // const { sessionHelp } = require('./helpers/session-helpers')
+// 掛載 auth
+const { authenticator } = require('../todo-sequelize2/middleware/auth')
 
 const methodOverride = require('method-override')
-const bcrypt = require('bcryptjs')
 const session = require('express-session')
 const passport = require('./config/passport')
 const flash = require('connect-flash')
 
-// 掛載 auth
-const { authenticator } = require('../todo-sequelize2/middleware/auth')
+const router = express.Router()
+const userController = require('./controllers/user-controller')
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
@@ -76,33 +78,35 @@ app.post('/users/login', passport.authenticate('local', {
 })
 
 // register
-app.get('/users/register', (req, res) => {
-  res.render('register')
-})
-app.post('/users/register', (req, res) => {
-  const { name, email, password, confirmPassword } = req.body
-  User.findOne({ where: { email } }).then(user => {
-    if (user) {
-      console.log('User already exists')
-      return res.render('register', {
-        name,
-        email,
-        password,
-        confirmPassword
-      })
-    }
-    return bcrypt
-      .genSalt(10)
-      .then(salt => bcrypt.hash(password, salt))
-      .then(hash => User.create({
-        name,
-        email,
-        password: hash
-      }))
-      .then(() => res.redirect('/'))
-      .catch(err => console.log(err))
-  })
-})
+// app.get('/users/register', (req, res) => {
+//   res.render('register')
+// })
+// app.post('/users/register', (req, res) => {
+//   const { name, email, password, confirmPassword } = req.body
+//   User.findOne({ where: { email } }).then(user => {
+//     if (user) {
+//       console.log('User already exists')
+//       return res.render('register', {
+//         name,
+//         email,
+//         password,
+//         confirmPassword
+//       })
+//     }
+//     return bcrypt
+//       .genSalt(10)
+//       .then(salt => bcrypt.hash(password, salt))
+//       .then(hash => User.create({
+//         name,
+//         email,
+//         password: hash
+//       }))
+//       .then(() => res.redirect('/'))
+//       .catch(err => console.log(err))
+//   })
+// })
+router.get('/users/register', userController.registerPage)
+router.post('/users/register', userController.register)
 
 // logout
 app.get('/users/logout', (req, res) => {
