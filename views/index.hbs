@@ -1,9 +1,12 @@
-<a href="/todos/new" class="btn btn-warning mb-3">新增任務</a>
+<a href="/todos/new" class="btn btn-warning mb-3">新增房產單位</a>
 <table class="table">
   <thead class="table-dark">
     <tr class="table-secondary">
       <th scope="col">地點</th>
-      <th scope="col">租約訖日</th>
+      <th scope="col">
+        <p class="m-0">租約訖日</p>
+        <p class="m-0">(YYYY/MM/DD)</p>
+      </th>
       <th scope="col">服務仲介</th>
       <th scope="col">狀態</th>
       <th></th>
@@ -13,19 +16,21 @@
 
     {{#each units}}
     <tr>
-      <td scope="col" class="">{{ this.address }}</td>
-      <td scope="col">{{formatDate this.endDate}}</td>
+      <td scope="col">{{ this.address }}</td>
+      <td scope="col">{{ formatDate this.endDate }}</td>
       <td scope="col">{{ this.Agency.name }}</td>
       <td scope="col">{{#if this.status }}已出租{{else}}未出租{{/if}}</td>
       <td>
-        <a class="btn btn-outline-secondary" href="./todos/{{ this.id }}">detail</a>
-        <a class="btn btn-outline-warning" href="./todos/{{ this.id }}/edit">edit</a>
+        <a class="btn btn-outline-warning" href="./units/{{ this.id }}">detail</a>
+
+        <a class="btn btn-outline-warning" href="./units/{{ this.id }}/edit">edit</a>
+
         {{#if admin}}
         <form action="./todos/{{ this.id }}?_method=DELETE" method="POST" style="display: inline;">
           <button class="btn btn-danger" type="submit">delete</button>
         </form>
         {{/if}}
-      </td>     
+      </td>
     </tr>
     {{/each}}
 

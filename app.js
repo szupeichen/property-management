@@ -37,7 +37,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }))
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true })) // body-parser
 app.use(methodOverride('_method'))
 
 // 初始化 Passport 及 啟動處理session功能
@@ -64,7 +64,6 @@ app.get('/users/login', (req, res) => {
     res.render('login')
   }
 })
-
 app.post('/users/login', passport.authenticate('local', {
   failureRedirect: '/users/login', failureFlash: true
 }), function (req, res) {
@@ -113,10 +112,12 @@ app.get('/users/logout', (req, res) => {
 })
 
 // read
-app.get('/todos/:id', (req, res) => {
+app.get('/units/:id', (req, res) => {
   const id = req.params.id
-  return Unit.findByPk(id)
-    .then(todo => res.render('detail', { todo: todo.toJSON() }))
+  return Unit.findByPk(id, {
+    include: [Agency]
+  })
+    .then(unit => res.render('detail', { units: unit.toJSON() }))
     .catch(error => console.log(error))
 })
 
@@ -126,7 +127,7 @@ app.get('/', authenticator, (req, res) => {
     nest: true,
     include: [Agency]
   })
-    .then((units) => { console.log(units);return res.render('index', { units }) })
+    .then((units) => { return res.render('index', { units }) })
     .catch((error) => { return res.status(422).json(error) })
 })
 

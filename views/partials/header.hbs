@@ -13,13 +13,13 @@
             <span class="text-white nav-link mx-4">Hi, {{ user.name }}</span>
           </li>
           {{/if}}
-          <li class="nav-item">
+          <div class="nav-item">
             {{#if user}}
             <a href="/users/logout"><button class="btn btn-outline-secondary my-sm-0 my-2">Logout</button></a>
             {{else}}
-            <a href="/users/login"><button class="btn btn-outline-secondary my-sm-0 my-2">Login</button></a>
+            <a href="/users/login"><button class="btn btn-outline-secondary my-sm-0 my-2">Login</button></a>           
             {{/if}}
-          </li>
+          </div>
         </ul>
       </div>
     </div>

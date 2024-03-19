@@ -1,10 +1,22 @@
-<form action="/todos/{{ todo.id }}?_method=DELETE" method="POST" class="d-inline">
-  <div class="input-group">
-    <div class="input-group-text">
-      <input type="checkbox" class="form-check-input mt-0" name="isDone" {{#if todo.isDone }} checked {{/if}} disabled>
-    </div>
-    <input class="form-control" type="text" placeholder="name" name="name" value="{{ todo.name }}" disabled>
-    <a class="btn btn-success" href="/todos/{{ todo.id }}/edit">edit</a>
-    <button class="btn btn-danger" type="submit">delete</button>
-  </div>
-</form>
+<a href="/" class="btn btn-warning mb-3 me-3 row">回上頁</a>
+<a href="/units/:id/edit" class="btn btn-warning mb-3 row">修改</a>
+
+<table class="table w-100">
+  <tr class="table-secondary row">
+    <th class="col-4">地址：{{units.address}}</th>
+    <th class="col-8">租金：{{units.revenue}}</th>
+  </tr>
+  <tr class="row">
+    <td class="col-4">租約起日：{{formatDate units.startDate}}</td>
+    <td class="col-4">租約訖日：{{formatDate units.endDate}}</td>
+    <td class="col-4">出租狀態：{{#if units.status }}已出租{{else}}未出租{{/if}}</td>
+  </tr>
+  <tr class="row">
+    <td class="col-4">服務仲介：{{units.Agency.name}}</td>
+    <td class="col-4">仲介公司：{{units.Agency.company}}</td>
+    <td class="col-4">聯絡電話：{{units.Agency.phoneNumber}}</td>
+  </tr>
+  <tr class="row">
+    <td>備註：{{units.note}}</td>
+  </tr>
+</table>
