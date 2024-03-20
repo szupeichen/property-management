@@ -7,7 +7,6 @@ const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-ac
 const handlebarsHelpers = require('./helpers/handlebars-helpers')
 // auth-helpers
 const { getUser } = require('./helpers/auth-helpers')
-// const { sessionHelp } = require('./helpers/session-helpers')
 // 掛載 auth
 const { authenticator } = require('../todo-sequelize2/middleware/auth')
 
@@ -16,8 +15,7 @@ const session = require('express-session')
 const passport = require('./config/passport')
 const flash = require('connect-flash')
 
-const router = express.Router()
-const userController = require('./controllers/user-controller')
+const router = require('./routes/index')
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
@@ -56,6 +54,7 @@ app.use((req, res, next) => {
   next()
 })
 
+app.use(router)
 // API
 // login
 app.get('/users/login', (req, res) => {
@@ -105,8 +104,7 @@ app.post('/users/login', passport.authenticate('local', {
 //       .catch(err => console.log(err))
 //   })
 // })
-router.get('/users/register', userController.registerPage)
-router.post('/users/register', userController.register)
+
 
 // logout
 app.get('/users/logout', (req, res) => {
