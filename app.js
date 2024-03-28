@@ -1,21 +1,15 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
 const Handlebars = require('handlebars')
-// 解決handlebars因為改善資安漏洞的denied access property
-const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
-// handlebars-helpers
-const handlebarsHelpers = require('./helpers/handlebars-helpers')
-// auth-helpers
-const { getUser } = require('./helpers/auth-helpers')
-// 掛載 auth
-const { authenticator } = require('../todo-sequelize2/middleware/auth')
+const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access') // 解決handlebars因為改善資安漏洞的denied access property
+const handlebarsHelpers = require('./helpers/handlebars-helpers') // handlebars-helpers
+const { getUser } = require('./helpers/auth-helpers') // auth-helpers
+const { authenticator } = require('../todo-sequelize2/middleware/auth') // 掛載 auth
 
 const methodOverride = require('method-override')
 const session = require('express-session')
 const passport = require('./config/passport')
 const flash = require('connect-flash')
-
-const router = require('./routes/index')
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
@@ -54,7 +48,9 @@ app.use((req, res, next) => {
   next()
 })
 
+const router = require('./routes/index')
 app.use(router)
+
 // API
 // login
 app.get('/users/login', (req, res) => {
@@ -76,36 +72,6 @@ app.post('/users/login', passport.authenticate('local', {
   res.redirect('/')
 })
 
-// register
-// app.get('/users/register', (req, res) => {
-//   res.render('register')
-// })
-// app.post('/users/register', (req, res) => {
-//   const { name, email, password, confirmPassword } = req.body
-//   User.findOne({ where: { email } }).then(user => {
-//     if (user) {
-//       console.log('User already exists')
-//       return res.render('register', {
-//         name,
-//         email,
-//         password,
-//         confirmPassword
-//       })
-//     }
-//     return bcrypt
-//       .genSalt(10)
-//       .then(salt => bcrypt.hash(password, salt))
-//       .then(hash => User.create({
-//         name,
-//         email,
-//         password: hash
-//       }))
-//       .then(() => res.redirect('/'))
-//       .catch(err => console.log(err))
-//   })
-// })
-
-
 // logout
 app.get('/users/logout', (req, res) => {
   req.logout()
@@ -114,28 +80,28 @@ app.get('/users/logout', (req, res) => {
 })
 
 // read
-app.get('/units/:id', (req, res) => {
-  const id = req.params.id
-  return Unit.findByPk(id, {
-    include: [Agency]
-  })
-    .then(unit => res.render('detail', { units: unit.toJSON() }))
-    .catch(error => console.log(error))
-})
+// app.get('/units/:id', (req, res) => {
+//   const id = req.params.id
+//   return Unit.findByPk(id, {
+//     include: [Agency]
+//   })
+//     .then(unit => res.render('detail', { units: unit.toJSON() }))
+//     .catch(error => console.log(error))
+// })
 
-app.get('/units/:id/edit', (req, res) => {
-  res.render('detail')
-})
+// app.get('/units/:id/edit', (req, res) => {
+//   res.render('detail')
+// })
 
-app.get('/', authenticator, (req, res) => {
-  return Unit.findAll({
-    raw: true,
-    nest: true,
-    include: [Agency]
-  })
-    .then((units) => { return res.render('index', { units }) })
-    .catch((error) => { return res.status(422).json(error) })
-})
+// app.get('/', authenticator, (req, res) => {
+//   return Unit.findAll({
+//     raw: true,
+//     nest: true,
+//     include: [Agency]
+//   })
+//     .then((units) => { return res.render('index', { units }) })
+//     .catch((error) => { return res.status(422).json(error) })
+// })
 
 app.listen(PORT, () => {
   console.log(`App is running on http://localhost:${process.env.PORT}`)
