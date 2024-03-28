@@ -4,11 +4,10 @@ const Handlebars = require('handlebars')
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access') // 解決handlebars因為改善資安漏洞的denied access property
 const handlebarsHelpers = require('./helpers/handlebars-helpers') // handlebars-helpers
 const { getUser } = require('./helpers/auth-helpers') // auth-helpers
-const { authenticator } = require('../todo-sequelize2/middleware/auth') // 掛載 auth
+const passport = require('./config/passport')
 
 const methodOverride = require('method-override')
 const session = require('express-session')
-const passport = require('./config/passport')
 const flash = require('connect-flash')
 
 if (process.env.NODE_ENV !== 'production') {
@@ -17,11 +16,6 @@ if (process.env.NODE_ENV !== 'production') {
 
 const app = express()
 const PORT = process.env.PORT
-
-const db = require('./models')
-const Agency = db.Agency
-const Unit = db.Unit
-const User = db.User
 
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs', handlebars: allowInsecurePrototypeAccess(Handlebars), helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
@@ -50,58 +44,6 @@ app.use((req, res, next) => {
 
 const router = require('./routes/index')
 app.use(router)
-
-// API
-// login
-app.get('/users/login', (req, res) => {
-  const session = req.session
-  if (session.savedEmail !== '') {
-    res.render('login', { email: session.savedEmail })
-  } else {
-    res.render('login')
-  }
-})
-app.post('/users/login', passport.authenticate('local', {
-  failureRedirect: '/users/login', failureFlash: true
-}), function (req, res) {
-  const session = req.session
-  if (req.body.rememberUser === 'on') {
-    session.savedEmail = req.user.email || ''
-  }
-  req.flash('success_messages', '成功登入！')
-  res.redirect('/')
-})
-
-// logout
-app.get('/users/logout', (req, res) => {
-  req.logout()
-  req.flash('success_msg', '你已經成功登出。')
-  res.redirect('/users/login')
-})
-
-// read
-// app.get('/units/:id', (req, res) => {
-//   const id = req.params.id
-//   return Unit.findByPk(id, {
-//     include: [Agency]
-//   })
-//     .then(unit => res.render('detail', { units: unit.toJSON() }))
-//     .catch(error => console.log(error))
-// })
-
-// app.get('/units/:id/edit', (req, res) => {
-//   res.render('detail')
-// })
-
-// app.get('/', authenticator, (req, res) => {
-//   return Unit.findAll({
-//     raw: true,
-//     nest: true,
-//     include: [Agency]
-//   })
-//     .then((units) => { return res.render('index', { units }) })
-//     .catch((error) => { return res.status(422).json(error) })
-// })
 
 app.listen(PORT, () => {
   console.log(`App is running on http://localhost:${process.env.PORT}`)

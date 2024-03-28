@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
 const db = require('../models')
 const { User } = db
+
 const userController = {
   registerPage: (req, res) => {
     res.render('register')
@@ -28,6 +29,22 @@ const userController = {
         .then(() => res.redirect('/'))
         .catch(err => console.log(err))
     })
+  },
+  loginPage: (req, res) => {
+    const session = req.session
+    if (session.savedEmail !== '') {
+      res.render('login', { email: session.savedEmail })
+    } else {
+      res.render('login')
+    }
+  },
+  login: (req, res) => {
+    res.redirect('/')
+  },
+  logout: (req, res) => {
+    req.logout()
+    req.flash('success_msg', '你已經成功登出。')
+    res.redirect('/users/login')
   }
 }
 module.exports = userController
