@@ -1,7 +1,7 @@
 <div class="mb-3">
   <a href="/todos/new" class="btn btn-warning me-3">新增房產單位</a>
   {{#if user.isAdmin }}
-  <form action="./todos/{{ this.id }}?_method=DELETE" method="POST" style="display: inline;">
+  <form action="/units/delete" method="GET" style="display: inline;">
     <button class="btn btn-danger" type="submit">刪除房產單位</button>
   </form>
   {{/if}}

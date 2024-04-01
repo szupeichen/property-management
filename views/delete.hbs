@@ -1,35 +1,38 @@
-<div class="mb-3">
-  <a href="/todos/new" class="btn btn-warning me-3">取消</a>
-  {{#if user.isAdmin }}
-  <form action="./todos/{{ this.id }}?_method=DELETE" method="POST" style="display: inline;">
-    <button class="btn btn-danger" type="submit">刪除房產資料</button>
+<div>
+  <form action="/units?_method=DELETE" method="POST" style="display: inline;">
+    <div class="mb-3">
+      <a href="/" class="btn btn-warning me-3">取消</a>
+      {{#if user.isAdmin }}
+      <button class="btn btn-danger" type="submit"
+        onclick="return confirm('確定要刪除嗎？')">刪除選取項目</button>
+      {{/if}}
+    </div>
+    <table class="table">
+      <thead class="table-dark">
+        <tr class="table-secondary">
+          <th></th>
+          <th scope="col">地點</th>
+          <th scope="col">
+            <p class="m-0">租約訖日</p>
+            <p class="m-0">(YYYY/MM/DD)</p>
+          </th>
+          <th scope="col">服務仲介</th>
+          <th scope="col">狀態</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each units}}
+        <tr>
+          <td>
+            <input class="me-1" type="checkbox" name="{{ this.id }}">
+          </td>
+          <td scope="col">{{ this.address }}</td>
+          <td scope="col">{{ formatDate this.endDate }}</td>
+          <td scope="col">{{ this.Agency.name }}</td>
+          <td scope="col">{{#if this.status }}已出租{{else}}未出租{{/if}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
   </form>
-  {{/if}}
 </div>
-<table class="table">
-  <thead class="table-dark">
-    <tr class="table-secondary">
-      <th></th>
-      <th scope="col">地點</th>
-      <th scope="col">
-        <p class="m-0">租約訖日</p>
-        <p class="m-0">(YYYY/MM/DD)</p>
-      </th>
-      <th scope="col">服務仲介</th>
-      <th scope="col">狀態</th>    
-    </tr>
-  </thead>
-  <tbody>
-    {{#each units}}
-    <tr>
-      <td>
-        <input class="me-1" type="checkbox" name="deleteUnits">
-      </td>
-      <td scope="col">{{ this.address }}</td>
-      <td scope="col">{{ formatDate this.endDate }}</td>
-      <td scope="col">{{ this.Agency.name }}</td>
-      <td scope="col">{{#if this.status }}已出租{{else}}未出租{{/if}}</td>     
-    </tr>
-    {{/each}}
-  </tbody>
-</table>

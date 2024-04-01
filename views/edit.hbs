@@ -6,21 +6,21 @@
     <tr class="table-secondary row">
       <th class="col-4">
         <input type="text">
-        地址：{{units.address}}</th>
+        地址：{{unit.address}}</th>
       <th class="col-8">租金：{{units.revenue}}</th>
     </tr>
     <tr class="row">
-      <td class="col-4">租約起日：{{formatDate units.startDate}}</td>
-      <td class="col-4">租約訖日：{{formatDate units.endDate}}</td>
-      <td class="col-4">出租狀態：{{#if units.status }}已出租{{else}}未出租{{/if}}</td>
+      <td class="col-4">租約起日：{{formatDate unit.startDate}}</td>
+      <td class="col-4">租約訖日：{{formatDate unit.endDate}}</td>
+      <td class="col-4">出租狀態：{{#if unit.status }}已出租{{else}}未出租{{/if}}</td>
     </tr>
     <tr class="row">
-      <td class="col-4">服務仲介：{{units.Agency.name}}</td>
-      <td class="col-4">仲介公司：{{units.Agency.company}}</td>
-      <td class="col-4">聯絡電話：{{units.Agency.phoneNumber}}</td>
+      <td class="col-4">服務仲介：{{unit.Agency.name}}</td>
+      <td class="col-4">仲介公司：{{unit.Agency.company}}</td>
+      <td class="col-4">聯絡電話：{{unit.Agency.phoneNumber}}</td>
     </tr>
     <tr class="row">
-      <td>備註：{{units.note}}</td>
+      <td>備註：{{unit.note}}</td>
     </tr>
     <button class="btn btn-danger" type="submit">儲存</button>
   </form>
