@@ -6,30 +6,34 @@
   </form>
   {{/if}}
 </div>
-<table class="table">
+<table class="table text-end">
   <thead class="table-dark">
     <tr class="table-secondary">
-      <th scope="col">地點</th>
+      <th scope="col" class="text-center">地點</th>
       <th scope="col">
         <p class="m-0">租約訖日</p>
         <p class="m-0">(YYYY/MM/DD)</p>
       </th>
+      <th scope="col">月租金</th>
+      <th scope="col">年租金</th>
       <th scope="col">服務仲介</th>
-      <th scope="col">狀態</th>
+      <th scope="col" class="text-center">狀態</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
     {{#each units}}
     <tr>
-      <td scope="col">{{ this.address }}</td>
+      <td scope="col" class="text-center">{{ this.address }}</td>
       <td scope="col">{{ formatDate this.endDate }}</td>
+      <th scope="col">{{ this.income }}</th>
+      <th scope="col">{{ annualIncome this.income }}</th>
       <td scope="col">{{ this.Agency.name }}</td>
-      <td scope="col">{{#if this.status }}已出租{{else}}未出租{{/if}}</td>
-      <td scope="col">
-        <a class="btn btn-outline-warning" href="./units/{{ this.id }}">detail</a>
-        <a class="btn btn-outline-warning" href="./units/{{ this.id }}/edit">edit</a>
-      </td>  
+      <td scope="col" class="text-center">{{#if this.status }}已出租{{else}}未出租{{/if}}</td>
+      <td scope="col" class="text-center d-flex">
+        <div class="w-50 me-2"><a class="btn btn-outline-warning w-100" href="./units/{{ this.id }}">detail</a></div>
+        <div class="w-50"><a class="btn btn-outline-warning w-100" href="./units/{{ this.id }}/edit">edit</a></div>
+      </td>
     </tr>
     {{/each}}
   </tbody>
