@@ -19,7 +19,8 @@ module.exports = (sequelize, DataTypes) => {
     startDate: DataTypes.DATE,
     endDate: DataTypes.DATE,
     note: DataTypes.TEXT,
-    status: DataTypes.BOOLEAN
+    status: DataTypes.BOOLEAN,
+    income: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Unit',
