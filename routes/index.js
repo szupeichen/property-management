@@ -14,11 +14,14 @@ router.post('/users/login', rememberEmail, passport.authenticate('local', {
   failureRedirect: '/users/login', failureFlash: true
 }), userController.login)
 router.get('/users/logout', userController.logout)
+
+router.get('/units/new', authenticator, unitController.unitsCreatePage)
 router.get('/units/delete', authenticator, unitController.unitsDeletePage)
 router.get('/units/:id/edit', authenticator, unitController.unitsEdit)
+router.post('/units/new', authenticator, unitController.unitsCreate)
 router.delete('/units', authenticator, unitController.unitsDelete)
 router.get('/units/:id', authenticator, unitController.unitsId)
-
+router.get('/getAgencyDetail', unitController.getAgencyDetail)
 router.get('/', authenticator, unitController.unitsAll)
 
 module.exports = router

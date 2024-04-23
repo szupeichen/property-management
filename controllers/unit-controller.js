@@ -44,7 +44,43 @@ const unitController = {
         .then(() => res.redirect('/units/delete'))
         .catch(err => next(err))
     })
+  },
+  unitsCreatePage: (req, res, next) => {
+    return Agency.findAll({
+      raw: true
+    })
+      .then((Agencies) => { res.render('new', { Agencies }) })
+      .catch(err => next(err))
+  },
+  unitsCreate: (req, res, next) => {
+    const {
+      address, income, startDate, endDate,
+      note,
+      status
+    } = req.body
+    if (!address) throw new Error('Unit address is required!')
+    Unit.create({
+      address,
+      income,
+      startDate,
+      endDate,
+      note,
+      status
+    })
+      .then(() => {
+        req.flash('success_messages', 'Unit was successfully created')
+        res.redirect('/units/:id')
+      })
+      .catch(err => next(err))
+  },
+  getAgencyDetail: async (req, res, next) => {
+    try {
+      const id = req.query.agencyId
+      const agency = await Agency.findByPk(id, { raw: true })
+      res.json(agency)
+    } catch (error) {
+      next(error)
+    }
   }
 }
-
 module.exports = unitController
