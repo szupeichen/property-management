@@ -14,6 +14,7 @@ const unitController = {
   },
   unitsId: (req, res) => {
     const id = req.params.id
+    console.log(id)
     return Unit.findByPk(id, {
       include: [Agency]
     })
