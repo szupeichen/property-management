@@ -58,7 +58,7 @@ const unitController = {
       note,
       status
     } = req.body
-    if (!address) throw new Error('Unit address is required!')
+    if (!address || !income) throw new Error('unfilled field')
     Unit.create({
       address,
       income,

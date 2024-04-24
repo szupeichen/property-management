@@ -1,7 +1,7 @@
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
 <a href="/" class="btn btn-warning mb-3 me-3 row">回上頁</a>
-
 <form action="/units/new" method="POST">
   <table class="table">
     <tr class="table-secondary row">
@@ -81,11 +81,11 @@
       </th>
     </tr>
   </table>
-</form>
 
-<div class="text-end">
-  <a href="./units/{{ this.id }}" class="btn btn-warning mb-3 w-100 row">儲存</a>
+<div class="text-center">
+  <button class="btn btn-warning mb-3 w-100 row" type="submit">儲存</button>
 </div>
+</form>
 
 {{!-- jQuery --}}
 <script>  

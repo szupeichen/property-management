@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
   Unit.init({
     address: DataTypes.STRING,
     income: DataTypes.INTEGER,
+    annualIncome: DataTypes.INTEGER,
     startDate: DataTypes.DATE,
     endDate: DataTypes.DATE,
     note: DataTypes.TEXT,
