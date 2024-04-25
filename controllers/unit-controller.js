@@ -14,7 +14,6 @@ const unitController = {
   },
   unitsId: (req, res) => {
     const id = req.params.id
-    console.log(id)
     return Unit.findByPk(id, {
       include: [Agency]
     })
@@ -74,6 +73,7 @@ const unitController = {
       })
       .catch(err => next(err))
   },
+  // 供jQuery ajax取得仲介資料
   getAgencyDetail: async (req, res, next) => {
     try {
       const id = req.query.agencyId
