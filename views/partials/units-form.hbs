@@ -1,75 +1,86 @@
-<tr class="table-secondary row">
-  <th class="col-1 ">
-    <label class="form-label" for="address">地址</label>
-  </th>
-  <th class="col-3">
-    <input class="form-control" type="text" name="address" id="address" placeholder="Enter address" required>
-  </th>
-  <th class="col-1">
-    <label class="form-label" for="income">月租金</label>
-    </div>
-  <th class="col-3">
-    <input class="form-control" type="text" name="income" id="income" placeholder="Enter amount">
-  </th>
-  <th class="col-1">
-    <label class="form-label" for="annualIncome">年租金</label>
-  </th>
-  <th class="col-3">
-    <input class="form-control" type="text" name="annualIncome" id="annualIncome" placeholder="Automatic calculation">
-  </th>
-</tr>
-<tr class="row">
-  <th class="col-1">
-    <label class="form-label" for="startDate">租約起日</label>
-  </th>
-  <th class="col-3">
-    <input class="form-control" type="date" name="startDate" id="startDate">
-  </th>
-  <th class="col-1">
-    <label class="form-label" for="endDate">租約訖日</label>
-  </th>
-  <th class="col-3">
-    <input class="form-control" type="date" name="endDate" id="endDate">
-  </th>
-  <th class="col-1">
-    <label class="form-label" for="status"> 已出租 </label>
-  </th>
-  <th class="col-3">
-    <input class="form-check-input" type="checkbox" name="status" id="status"><span class="ps-3 fw-normal">(已出租請勾選)</span>
-  </th>
-</tr>
-<tr class="row">
-  <th class="col-1">
-    <label class="form-label" for="agencyName">服務仲介</label>
-  </th>
-  <th class="col-3">
-    <select class="form-select" aria-label="Agency selector" id="agencyName" name="agencyName">
-      <option selected>選擇仲介</option>
-      {{#each Agencies}}
-      <option value="{{this.id}}">{{this.name}}</option>
-      {{/each}}
-    </select>
-  </th>
-
-  <th class="col-1">
-    <label class="form-label" for="agencyCompany">仲介公司</label>
-  </th>
-  <th class="col-3">
-    <input class="form-control" type="text" name="agencyCompany" id="agencyCompany">
-  </th>
-
-  <th class="col-1">
-    <label class="form-label" for="address">仲介電話</label>
-  </th>
-  <th class="col-3">
-    <input class="form-control" type="tel" name="agencyPhoneNumber" id="agencyPhoneNumber">
-  </th>
-
-</tr>
-<tr class="row">
-  <th class="col-1"><label class="form-label" for="note">備註</label>
-  </th>
-  <th class="col-11">
-    <input class="form-control" type="text" name="unitsNote" id="unitsNote" placeholder="Enter note">
-  </th>
-</tr>
+<table class="table">
+  <tr class="table-secondary row mx-1">
+    <th class="col-1">
+      <label class="form-label" for="address">地址</label>
+    </th>
+    <th class="col-3">
+      <input class="form-control" type="text" name="address" id="address" placeholder="Enter address"
+        value="{{unit.address}}" required>
+    </th>
+    <th class="col-1">
+      <label class="form-label" for="income">月租金</label>
+      </div>
+    <th class="col-3">
+      <input class="form-control" type="text" name="income" id="income" placeholder="Enter amount"
+        value="{{unit.income}}">
+    </th>
+    <th class="col-1">
+      <label class="form-label" for="annualIncome">年租金</label>
+    </th>
+    <th class="col-3">
+      <input class="form-control" type="text" name="annualIncome" id="annualIncome" placeholder="Automatic calculation"
+        value="{{unit.annualIncome}}">
+    </th>
+  </tr>
+  <tr class="row mx-1">
+    <th class="col-1">
+      <label class="form-label" for="startDate">租約起日</label>
+    </th>
+    <th class="col-3">
+      <input class="form-control" type="date" name="startDate" id="startDate" value="{{formatDate unit.startDate}}">
+    </th>
+    <th class="col-1">
+      <label class="form-label" for="endDate">租約訖日</label>
+    </th>
+    <th class="col-3">
+      <input class="form-control" type="date" name="endDate" id="endDate" value="{{formatDate unit.endDate}}">
+    </th>
+    <th class="col-1">
+      <label class="form-label" for="status"> 已出租 </label>
+    </th>
+    <th class="col-3">
+      <input class="form-check-input" type="checkbox" name="status" id="status" {{#if statusTrue}}checked{{/if}}><span
+        class="ps-3 fw-normal">(已出租請勾選)</span>
+    </th>
+  </tr>
+  <tr class="row mx-1">
+    <th class="col-1">
+      <label class="form-label" for="agencyName">服務仲介</label>
+    </th>
+    <th class="col-3">
+      <select class="form-select" aria-label="Agency selector" id="agencyName" name="agencyName">
+        {{#if unit.Agency}}
+        <option selected>{{unit.Agency.name}}</option>
+        {{#each theRestAgencies}}
+        <option value="{{this.id}}">{{this.name}}</option>
+        {{/each}}
+        {{else}}
+        <option selected>選擇仲介</option>
+        {{#each theRestAgencies}}
+        <option value="{{this.id}}">{{this.name}}</option>
+        {{/each}}
+        {{/if}}
+      </select>
+    </th>
+    <th class="col-1">
+      <label class="form-label" for="agencyCompany">仲介公司</label>
+    </th>
+    <th class="col-3">
+      <input class="form-control" type="text" name="agencyCompany" id="agencyCompany" value="{{unit.Agency.company}}">
+    </th>
+    <th class="col-1">
+      <label class="form-label" for="address">仲介電話</label>
+    </th>
+    <th class="col-3">
+      <input class="form-control" type="tel" name="agencyPhoneNumber" id="agencyPhoneNumber" value="{{unit.Agency.phoneNumber}}">
+    </th>
+  </tr>
+  <tr class="row mx-1">
+    <th class="col-1"><label class="form-label" for="note">備註</label>
+    </th>
+    <th class="col-11">
+      <input class="form-control" type="text" name="unitsNote" id="unitsNote" placeholder="Enter note"
+        value="{{unit.note}}">
+    </th>
+  </tr>
+</table>

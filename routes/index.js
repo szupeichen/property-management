@@ -17,10 +17,11 @@ router.get('/users/logout', userController.logout)
 
 router.get('/units/new', authenticator, unitController.unitsCreatePage)
 router.get('/units/delete', authenticator, unitController.unitsDeletePage)
-router.get('/units/:id/edit', authenticator, unitController.unitsEdit)
+router.get('/units/:id/edit', authenticator, unitController.unitsEditPage)
 router.post('/units/new', authenticator, unitController.unitsCreate)
 router.delete('/units', authenticator, unitController.unitsDelete)
 router.get('/units/:id', authenticator, unitController.unitsId)
+router.put('/units/:id', authenticator, unitController.unitsEdit)
 router.get('/getAgencyDetail', unitController.getAgencyDetail)
 router.get('/', authenticator, unitController.unitsAll)
 

@@ -20,8 +20,36 @@ const unitController = {
       .then(unit => res.render('detail', { unit }))
       .catch(error => console.log(error))
   },
+  unitsEditPage: async (req, res, next) => {
+    const id = req.params.id
+    let statusTrue
+    try {
+      const unit = await Unit.findByPk(id, {
+        include: [Agency]
+      })
+      const data = unit.dataValues
+      const Agencies = await Agency.findAll({
+        raw: true,
+        nest: true
+      })
+      // 下拉選單顯示其他仲介
+      const theRestAgencies = await Agencies.filter(
+        (Agency) => Agency.id !== data.agencyId
+      )
+      // 偵測unit中的已出租有無勾選
+      function ifCheckedBox () {
+        if (data.status === true) {
+          statusTrue = true
+        }
+      }
+      await ifCheckedBox()
+      await res.render('edit', { unit, theRestAgencies, statusTrue })
+    } catch (error) {
+      next(error)
+    }
+  },
   unitsEdit: (req, res) => {
-    res.render('detail')
+
   },
   unitsDeletePage: (req, res) => {
     return Unit.findAll({
@@ -58,7 +86,7 @@ const unitController = {
       note,
       status
     } = req.body
-    if (!address || !income) throw new Error('unfilled field')
+    if (!address || !status) throw new Error('unfilled field')
     Unit.create({
       address,
       income,

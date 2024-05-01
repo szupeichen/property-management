@@ -1,19 +1,24 @@
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
   integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
-<a href="/" class="btn btn-warning mb-3 me-3 row">回上頁</a>
+{{!-- html --}}
 <form action="/units/new" method="POST">
-  <table class="table">
-  {{> units-form}}
-  </table>
+  <div>
+    <a href="javascript:history.back()" class="btn btn-warning mb-3">回上頁</a>
+  </div>
+  <div>
+    <h2 class="text-start ">新增房產資訊</h1>
+  </div>
 
-<div class="text-center">
-  <button class="btn btn-warning mb-3 w-100 row" type="submit">儲存</button>
-</div>
+  {{> units-form}}
+
+  <div class="text-center">
+    <button class="btn btn-warning mb-3 w-100 row" type="submit">儲存</button>
+  </div>
 </form>
 
 {{!-- jQuery --}}
-<script>  
+<script>
   $(document).ready(function () {
     // 監聽income欄位的輸入值，自動計算年租金
     $('#income').on('input', function () {
@@ -29,9 +34,9 @@
     $('#agencyName').change(function () {
       const selectedAgencyId = $(this).val();
       $.ajax({
-        url: '/getAgencyDetail', 
+        url: '/getAgencyDetail',
         method: 'GET',
-        data: { agencyId: selectedAgencyId }, 
+        data: { agencyId: selectedAgencyId },
         success: function (res) {
           if (res === null) {
             $('#agencyCompany').val('');

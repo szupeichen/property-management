@@ -1,27 +1,52 @@
-<a href="/" class="btn btn-warning mb-3 me-3 row">回上頁</a>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
+{{!-- html --}}
+<form action="/units/{{unit.id}}?_method=PUT" method="POST">
+  <div>
+    <a href="javascript:history.back()" class="btn btn-warning mb-3">回上頁</a>
+  </div>
+  <div>
+    <h2 class="text-start ">編輯房產資訊</h1>
+  </div>
 
-<table class="table w-100">
-  <form action="/units/:id/edit" method="POST">
-    <tr class="table-secondary row">
-      <th class="col-4">
-        <input type="text">
-        地址：{{unit.address}}</th>
-      <th class="col-8">租金：{{units.revenue}}</th>
-    </tr>
-    <tr class="row">
-      <td class="col-4">租約起日：{{formatDate unit.startDate}}</td>
-      <td class="col-4">租約訖日：{{formatDate unit.endDate}}</td>
-      <td class="col-4">出租狀態：{{#if unit.status }}已出租{{else}}未出租{{/if}}</td>
-    </tr>
-    <tr class="row">
-      <td class="col-4">服務仲介：{{unit.Agency.name}}</td>
-      <td class="col-4">仲介公司：{{unit.Agency.company}}</td>
-      <td class="col-4">仲介電話：{{unit.Agency.phoneNumber}}</td>
-    </tr>
-    <tr class="row">
-      <td>備註：{{unit.note}}</td>
-    </tr>
-    <button class="btn btn-danger" type="submit">儲存</button>
-  </form>
-</table>
+  {{> units-form}}
+
+  <div class="text-center">
+    <button class="btn btn-warning mb-3 w-100 row" type="submit">儲存</button>
+  </div>
+</form>
+
+{{!-- jQuery --}}
+<script>
+  $(document).ready(function () {
+    // 監聽income欄位的輸入值，自動計算年租金
+    $('#income').on('input', function () {
+      const income = parseFloat($(this).val());
+      if (!isNaN(income)) {
+        const annualIncome = income * 12;
+        $('#annualIncome').val(annualIncome);
+      } else {
+        $('#annualIncome').val('');
+      }
+    })
+    // 根據所選仲介自動帶入對應公司及電話
+    $('#agencyName').change(function () {
+      const selectedAgencyId = $(this).val();
+      $.ajax({
+        url: '/getAgencyDetail',
+        method: 'GET',
+        data: { agencyId: selectedAgencyId },
+        success: function (res) {
+          if (res === null) {
+            $('#agencyCompany').val('');
+            $('#agencyPhoneNumber').val('')
+          } else {
+            $('#agencyCompany').val(res.company);
+            $('#agencyPhoneNumber').val(res.phoneNumber)
+          }
+        }
+      })
+    })
+  })
+</script>

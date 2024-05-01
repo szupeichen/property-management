@@ -1,23 +1,25 @@
-<a href="/" class="btn btn-warning mb-3 me-3 row">回首頁</a>
-<a href="/units/:id/edit" class="btn btn-warning mb-3 row">修改</a>
+<div class="mb-3">
+  <a href="javascript:history.back()" class="btn btn-warning me-3">回上頁</a>
+  <a href="/units/:id/edit" class="btn btn-warning">修改</a>
+</div>
 
 <table class="table w-100">
-  <tr class="table-secondary row">
+  <tr class="table-secondary row mx-1">
     <th class="col-4">地址：{{unit.address}}</th>
     <th class="col-4">月租金：{{unit.income}}</th>
     <th class="col-4">年租金：{{unit.annualIncome}}</th>
   </tr>
-  <tr class="row">
+  <tr class="row mx-1">
     <td class="col-4">租約起日：{{formatDate unit.startDate}}</td>
     <td class="col-4">租約訖日：{{formatDate unit.endDate}}</td>
     <td class="col-4">出租狀態：{{#if unit.status }}已出租{{else}}未出租{{/if}}</td>
   </tr>
-  <tr class="row">
+  <tr class="row mx-1">
     <td class="col-4">服務仲介：{{unit.Agency.name}}</td>
     <td class="col-4">仲介公司：{{unit.Agency.company}}</td>
     <td class="col-4">仲介電話：{{unit.Agency.phoneNumber}}</td>
   </tr>
-  <tr class="row">
+  <tr class="row mx-1">
     <td>備註：{{unit.note}}</td>
   </tr>
 </table>
