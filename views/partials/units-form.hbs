@@ -50,13 +50,13 @@
     <th class="col-3">
       <select class="form-select" aria-label="Agency selector" id="agencyName" name="agencyName">
         {{#if unit.Agency}}
-        <option selected>{{unit.Agency.name}}</option>
+        <option value="{{unit.Agency.id}}"selected>{{unit.Agency.name}}</option>
         {{#each theRestAgencies}}
         <option value="{{this.id}}">{{this.name}}</option>
         {{/each}}
         {{else}}
         <option selected>選擇仲介</option>
-        {{#each theRestAgencies}}
+        {{#each Agencies}}
         <option value="{{this.id}}">{{this.name}}</option>
         {{/each}}
         {{/if}}

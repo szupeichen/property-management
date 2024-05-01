@@ -18,35 +18,4 @@
 </form>
 
 {{!-- jQuery --}}
-<script>
-  $(document).ready(function () {
-    // 監聽income欄位的輸入值，自動計算年租金
-    $('#income').on('input', function () {
-      const income = parseFloat($(this).val());
-      if (!isNaN(income)) {
-        const annualIncome = income * 12;
-        $('#annualIncome').val(annualIncome);
-      } else {
-        $('#annualIncome').val('');
-      }
-    })
-    // 根據所選仲介自動帶入對應公司及電話
-    $('#agencyName').change(function () {
-      const selectedAgencyId = $(this).val();
-      $.ajax({
-        url: '/getAgencyDetail',
-        method: 'GET',
-        data: { agencyId: selectedAgencyId },
-        success: function (res) {
-          if (res === null) {
-            $('#agencyCompany').val('');
-            $('#agencyPhoneNumber').val('')
-          } else {
-            $('#agencyCompany').val(res.company);
-            $('#agencyPhoneNumber').val(res.phoneNumber)
-          }
-        }
-      })
-    })
-  })
-</script>
+{{> jQuery-script}}
