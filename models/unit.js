@@ -18,8 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     address: DataTypes.STRING,
     income: DataTypes.INTEGER,
     annualIncome: DataTypes.INTEGER,
-    startDate: DataTypes.DATE,
-    endDate: DataTypes.DATE,
+    startDate: DataTypes.DATE(6),
+    endDate: DataTypes.DATE(6),
     note: DataTypes.TEXT,
     status: DataTypes.BOOLEAN
   }, {

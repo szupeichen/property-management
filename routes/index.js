@@ -5,6 +5,7 @@ const passport = require('../config/passport')
 const userController = require('../controllers/user-controller')
 const unitController = require('../controllers/unit-controller')
 const { authenticator } = require('../middleware/auth')
+const { generalErrorHandler } = require('../middleware/error-handler')
 const { rememberEmail } = require('../helpers/auth-helpers')
 
 router.get('/users/register', userController.registerPage)
@@ -24,5 +25,6 @@ router.get('/units/:id', authenticator, unitController.unitsId)
 router.put('/units/:id', authenticator, unitController.unitsEdit)
 router.get('/getAgencyDetail', unitController.getAgencyDetail)
 router.get('/', authenticator, unitController.unitsAll)
+router.use('/', generalErrorHandler)
 
 module.exports = router
