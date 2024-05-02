@@ -48,7 +48,7 @@
       <label class="form-label" for="agencyName">服務仲介</label>
     </th>
     <th class="col-3">
-      <select class="form-select" aria-label="Agency selector" id="agencyName" name="agencyName">
+      <select class="form-select" aria-label="Agency selector" id="agencyId" name="agencyId">
         {{#if unit.Agency}}
         <option value="{{unit.Agency.id}}"selected>{{unit.Agency.name}}</option>
         {{#each theRestAgencies}}
@@ -66,7 +66,8 @@
       <label class="form-label" for="agencyCompany">仲介公司</label>
     </th>
     <th class="col-3">
-      <input class="form-control" type="text" name="agencyCompany" id="agencyCompany" value="{{unit.Agency.company}}">
+      <input class="form-control" type="text" name="agencyCompany" id="agencyCompany" 
+      value="{{unit.Agency.company}}">
     </th>
     <th class="col-1">
       <label class="form-label" for="address">仲介電話</label>
@@ -79,7 +80,7 @@
     <th class="col-1"><label class="form-label" for="note">備註</label>
     </th>
     <th class="col-11">
-      <input class="form-control" type="text" name="unitsNote" id="unitsNote" placeholder="Enter note"
+      <input class="form-control" type="text" name="note" id="note" placeholder="Enter note"
         value="{{unit.note}}">
     </th>
   </tr>

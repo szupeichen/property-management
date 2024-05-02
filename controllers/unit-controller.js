@@ -82,15 +82,12 @@ const unitController = {
   },
   unitsCreate: (req, res, next) => {
     const {
-      address, income, annualIncome, startDate, endDate, note, status
+      address, income, annualIncome, startDate, endDate, note, status, agencyId
     } = req.body
-
     if (!address || !income) throw new Error('unfilled field')
     const statusBoolean = (status === 'on')
     const incomeInt = parseInt(income, 10)
     const annualIncomeInt = parseInt(annualIncome, 10)
-    
-
     Unit.create({
       address,
       income: incomeInt,
@@ -98,11 +95,12 @@ const unitController = {
       startDate,
       endDate,
       note,
-      status: statusBoolean
+      status: statusBoolean,
+      agencyId
     })
-      .then(() => {
-        req.flash('success_messages', 'Unit was successfully created')
-        res.redirect('/units/:id')
+      .then((unit) => {
+        req.flash('success_msg', 'Unit was successfully created')
+        res.redirect(`/units/${unit.id}`)
       })
       .catch(err => next(err))
   },

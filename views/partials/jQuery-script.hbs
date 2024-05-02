@@ -11,7 +11,7 @@
       }
     })
     // 根據所選仲介自動帶入對應公司及電話
-    $('#agencyName').change(function () {
+    $('#agencyId').change(function () {
       const selectedAgencyId = $(this).val();
       $.ajax({
         url: '/getAgencyDetail',
