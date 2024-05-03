@@ -3,22 +3,22 @@ const { Unit } = db
 const { Agency } = db
 
 const unitController = {
-  unitsAll: (req, res) => {
+  unitsAll: (req, res, next) => {
     return Unit.findAll({
       raw: true,
       nest: true,
       include: [Agency]
     })
       .then((units) => { return res.render('index', { units }) })
-      .catch((error) => { return res.status(422).json(error) })
+      .catch((err) => next(err))
   },
-  unitsId: (req, res) => {
+  unitsId: (req, res, next) => {
     const id = req.params.id
     return Unit.findByPk(id, {
       include: [Agency]
     })
       .then(unit => res.render('detail', { unit }))
-      .catch(error => console.log(error))
+      .catch(err => next(err))
   },
   unitsEditPage: async (req, res, next) => {
     const id = req.params.id
@@ -44,12 +44,37 @@ const unitController = {
       }
       await ifCheckedBox()
       await res.render('edit', { unit, theRestAgencies, statusTrue })
-    } catch (error) {
-      next(error)
+    } catch (err) {
+      next(err)
     }
   },
-  unitsEdit: (req, res) => {
-
+  unitsEdit: (req, res, next) => {
+    const {
+      address, income, annualIncome, startDate, endDate, note, status, agencyId
+    } = req.body
+    if (!address || !income) throw new Error('unfilled field')
+    const statusBoolean = (status === 'on')
+    const incomeInt = parseInt(income, 10)
+    const annualIncomeInt = parseInt(annualIncome, 10)
+    Unit.findByPk(req.params.id)
+      .then(unit => {
+        if (!unit) throw new Error("Unit didn't exist!")
+        return unit.update({
+          address,
+          income: incomeInt,
+          annualIncome: annualIncomeInt,
+          startDate,
+          endDate,
+          note,
+          status: statusBoolean,
+          agencyId
+        })
+      })
+      .then((unit) => {
+        req.flash('success_msg', 'Unit was successfully updated')
+        res.redirect(`/units/${unit.id}`)
+      })
+      .catch(err => next(err))
   },
   unitsDeletePage: (req, res) => {
     return Unit.findAll({
@@ -58,7 +83,7 @@ const unitController = {
       include: [Agency]
     })
       .then((units) => { return res.render('delete', { units }) })
-      .catch((error) => { return res.status(422).json(error) })
+      .catch((err) => { return res.status(422).json(err) })
   },
   unitsDelete: (req, res, next) => {
     const selectedId = Object.keys(req.body)
@@ -110,8 +135,8 @@ const unitController = {
       const id = req.query.agencyId
       const agency = await Agency.findByPk(id, { raw: true })
       res.json(agency)
-    } catch (error) {
-      next(error)
+    } catch (err) {
+      next(err)
     }
   }
 }
