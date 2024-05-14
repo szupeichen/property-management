@@ -4,7 +4,6 @@ const Handlebars = require('handlebars')
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access') // 解決handlebars因為改善資安漏洞的denied access property
 const handlebarsHelpers = require('./helpers/handlebars-helpers') // handlebars-helpers
 const { getUser } = require('./helpers/auth-helpers') // auth-helpers
-const passport = require('./config/passport')
 
 const methodOverride = require('method-override')
 const session = require('express-session')
@@ -29,6 +28,7 @@ app.use(express.urlencoded({ extended: true })) // body-parser
 app.use(methodOverride('_method'))
 
 // 初始化 Passport 及 啟動處理session功能
+const passport = require('./config/passport')
 app.use(passport.initialize())
 app.use(passport.session())
 

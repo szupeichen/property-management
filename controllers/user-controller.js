@@ -39,11 +39,12 @@ const userController = {
     }
   },
   login: (req, res) => {
+    req.flash('success_msg', '您已經成功登入！')
     res.redirect('/')
   },
   logout: (req, res) => {
     req.logout()
-    req.flash('success_msg', '你已經成功登出。')
+    req.flash('success_msg', '您已經成功登出。')
     res.redirect('/users/login')
   }
 }
