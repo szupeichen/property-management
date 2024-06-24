@@ -9,6 +9,7 @@ const methodOverride = require('method-override')
 const session = require('express-session')
 const flash = require('connect-flash')
 
+// 只有在本地開發環境下運行時才載入 dotenv
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
