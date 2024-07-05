@@ -23,8 +23,8 @@ const sequelize = new Sequelize(
   {
     host: process.env.DB_HOST,
     dialect: 'mysql',
-    port: process.env.DB_PORT,
-    database: 'todo_sequelize2'
+    port: process.env.DB_PORT
+    // database: 'todo_sequelize2'
   }
 )
 
