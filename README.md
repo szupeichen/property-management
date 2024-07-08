@@ -1,5 +1,5 @@
-# 專案名稱 — 房產資訊管理系統 property-management
-好操作、依直覺使用的房產資訊管理工具
+# 房產資訊管理系統 property-management
+輕鬆擺脫繁雜Excel的房產租賃管理工具
 
 # 專案介紹 — Description
 ### 適用對象：  
@@ -12,38 +12,39 @@
 4.轉換行政管理系統時，行政人員抗性高。  
 
 ### 專案優勢：  
-1.使用MySQL關聯式資料庫，資料格式固定，易於維護。  
+1.使用MySQL關聯式資料庫，資料格式固定，易於維護。 
+2.串接AWS RDS，安全、穩定、將來可擴展性高。
 2.以Passport套件管理使用者權限，落實權限控制，省去鎖試算表的麻煩。  
 3.使用Express框架結合handlebars套件，打造清晰直覺的操作介面，降低資料誤改誤刪機率。  
-4.介面簡潔好上手，降低內部人員訓練成本，無痛轉換行政工具。 
+4.介面簡潔好上手，降低內部人員訓練成本，無痛轉換行政工具。
 
 ### 功能介紹：
 #### 登入/註冊使用者帳戶
 <img src="readMeImg/login_signUp.png" alt="登入及註冊功能" width="200" height="200">
 
 #### 瀏覽所有房產資料
-<img src="readMeImg/browse.png" alt="瀏覽功能" width="400">
+<img src="readMeImg/browse.png" alt="瀏覽功能" width="400">  
 一目了然現有資料，並可單獨檢視每筆資料細節，或針對每筆資料進行修改。
 
 #### 檢視一筆房產資料
-<img src="readMeImg/detail.png" alt="瀏覽功能" width="400">
+<img src="readMeImg/detail.png" alt="瀏覽功能" width="400">  
 針對單筆資料檢視。
 
 #### 新增一筆房產資料
-<img src="readMeImg/creat.png" alt="瀏覽功能" width="400">
+<img src="readMeImg/creat.png" alt="瀏覽功能" width="400">  
 【月租金】輸入金額後，系統自動計算並填入【年租金】。【服務仲介】選取後，系統自動帶入所屬公司及聯絡電話資料。防呆設計提升使用者體驗。
 
 #### 修改一筆房產資料
-<img src="readMeImg/edit.JPG" alt="瀏覽功能" width="400">
+<img src="readMeImg/edit.JPG" alt="瀏覽功能" width="400">  
 修改資料時，介面風格一致，減少輸入錯誤機率。
 
 #### 刪除一筆或多筆房產資料
-<img src="readMeImg/delete.png" alt="瀏覽功能" width="400">
+<img src="readMeImg/delete.png" alt="瀏覽功能" width="400">  
 一次刪除單筆或多筆資料，並設有防誤刪的訊息確認機制。
 
 # 安裝指南 — Installation Guide
 請依照以下步驟安裝本專案
-1. 取得專案    ```git clone https://github.com/peipeipeipeigit/property-management.git```
+1. 取得專案    ```git clone https://github.com/szupeichen/property-management.git```
 2. 移動到專案內 ```cd property-management```
 3. 運行專案     ```npm run dev```
 
@@ -62,12 +63,16 @@
 1. ***dotenv*** ^16.3.1
 2. ***eslint*** ^8.56.0
 ### 設置環境變數
-```SESSION_SECRET=XXXX
-MONGODB_URI=XXXX
-PORT=XXXX
-FACEBOOK_ID=XXXX
-FACEBOOK_SECRET=XXXX
-FACEBOOK_CALLBACK=XXXX
+```SESSION_SECRET=XXXX  
+PORT=XXXX  
+DB_HOST=mysql://username:password@localhost:3306/database_name  
+DB_NAME=XXXX  
+DB_PASSWORD=XXXX  
+DB_PORT=XXXX  
+DB_USER=XXXX  
+FACEBOOK_ID=XXXX  
+FACEBOOK_SECRET=XXXX  
+FACEBOOK_CALLBACK=XXXX  
 ```
 亦可參考專案內檔案 .env.example
 
