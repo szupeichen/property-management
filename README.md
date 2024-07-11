@@ -1,5 +1,5 @@
 # 房產資訊管理系統 property-management
-輕鬆擺脫繁雜Excel的房產租賃管理工具
+輕鬆擺脫繁雜Excel的租賃管理行政工具
 
 # 專案介紹 — Description
 ### 適用對象：  
@@ -91,4 +91,4 @@ FACEBOOK_CALLBACK=XXXX
 請參考https://reurl.cc/jW324n
 
 # 聯絡作者 — Contact With Me
-謝謝你看到這裡，你可以透過以下方式與我聯絡：Email：szupei21@gmail.com
+謝謝你看到這裡，你可以透過以下方式與我聯絡：Email-szupei21@gmail.com
