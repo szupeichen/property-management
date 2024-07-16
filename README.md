@@ -1,6 +1,7 @@
 # 房產資訊管理系統 property-management
 #### 輕鬆擺脫繁雜Excel的租賃管理行政工具  
-即刻掃描QR Code體驗  
+點擊連結進入：https://property-management-dcb0.onrender.com  
+或即刻掃描QR Code體驗  
 (初次連線可能須等候約50秒)  
 <img src="readMeImg/sideProjectQRcode.png" alt="QR Code" width="200" height="200">
 
