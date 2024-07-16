@@ -1,5 +1,8 @@
 # 房產資訊管理系統 property-management
-輕鬆擺脫繁雜Excel的租賃管理行政工具
+#### 輕鬆擺脫繁雜Excel的租賃管理行政工具  
+即刻掃描QR Code體驗  
+(初次連線可能須等候約50秒)  
+<img src="readMeImg/sideProjectQRcode.png" alt="QR Code" width="200" height="200">
 
 # 專案介紹 — Description
 ### 適用對象：  
