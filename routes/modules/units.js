@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
 
-const unitController = require('../controllers/unit-controller')
-const { authenticator } = require('../middleware/auth')
+const unitController = require('../../controllers/unit-controller')
+const { authenticator } = require('../../middleware/auth')
 
 router.use('/', authenticator)
 
