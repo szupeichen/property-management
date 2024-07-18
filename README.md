@@ -1,9 +1,15 @@
 # 房產資訊管理系統 property-management
-輕鬆擺脫繁雜Excel的房產租賃管理工具
+#### 輕鬆擺脫繁雜Excel的租賃管理行政工具  
+點擊連結進入：https://property-management-dcb0.onrender.com  
+或即刻掃描QR Code體驗(初次連線可能須等候約50秒)  
+#### 測試帳號密碼
+帳號：example@example.com  
+密碼：example  
+<img src="readMeImg/sideProjectQRcode.png" alt="QR Code" width="200" height="200">  
 
 # 專案介紹 — Description
 ### 適用對象：  
-過去常以Excel試算表管理龐大資料的財務、法務、行政、總務人員。
+過去常以Excel試算表或紙本管理龐大資料的財務、法務、行政、總務人員。
 
 ### 解決痛點：  
 1.試算表不易維護，經常誤刪、誤改資料。  
@@ -76,19 +82,16 @@ FACEBOOK_CALLBACK=XXXX
 ```
 亦可參考專案內檔案 .env.example
 
-## 測試帳號密碼
-帳號：example@example.com
-密碼：example
-
 # 專案設計細節 — Design Details
-### User Story @ Figma
-請參考https://reurl.cc/Ze9gdM
-
-### wireframe @ Figma
-請參考https://reurl.cc/oRr645
-
-### ERD @ Figma
+User Story @ Figma  
+請參考https://reurl.cc/Ze9gdM  
+  
+wireframe @ Figma  
+請參考https://reurl.cc/oRr645  
+  
+ERD @ Figma  
 請參考https://reurl.cc/jW324n
 
 # 聯絡作者 — Contact With Me
-謝謝你看到這裡，你可以透過以下方式與我聯絡：Email：szupei21@gmail.com
+謝謝你看到這裡，你可以透過以下方式與我聯絡  
+Email：szupei21@gmail.com
