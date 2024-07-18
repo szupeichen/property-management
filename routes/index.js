@@ -1,23 +1,14 @@
 const express = require('express')
 const router = express.Router()
-const passport = require('../config/passport')
 
-const userController = require('../controllers/user-controller')
 const unitController = require('../controllers/unit-controller')
 const auth = require('../routes/modules/auth')
+const users = require('../routes/modules/users')
 const { authenticator } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
-const { rememberEmail } = require('../helpers/auth-helpers')
 
-router.get('/auth', auth)
-router.get('/users/register', userController.registerPage)
-router.post('/users/register', userController.register)
-router.get('/users/login', userController.loginPage)
-router.post('/users/login', rememberEmail, passport.authenticate('local', {
-  failureRedirect: '/users/login', failureFlash: true
-}), userController.login)
-
-router.get('/users/logout', userController.logout)
+router.use('/auth', auth)
+router.use('/users', users)
 
 router.get('/units/new', authenticator, unitController.unitsCreatePage)
 router.get('/units/delete', authenticator, unitController.unitsDeletePage)
