@@ -1,9 +1,11 @@
 # 房產資訊管理系統 property-management
 #### 輕鬆擺脫繁雜Excel的租賃管理行政工具  
 點擊連結進入：https://property-management-dcb0.onrender.com  
-或即刻掃描QR Code體驗  
-(初次連線可能須等候約50秒)  
-<img src="readMeImg/sideProjectQRcode.png" alt="QR Code" width="200" height="200">
+或即刻掃描QR Code體驗(初次連線可能須等候約50秒)  
+#### 測試帳號密碼
+帳號：example@example.com  
+密碼：example  
+<img src="readMeImg/sideProjectQRcode.png" alt="QR Code" width="200" height="200">  
 
 # 專案介紹 — Description
 ### 適用對象：  
@@ -79,10 +81,6 @@ FACEBOOK_SECRET=XXXX
 FACEBOOK_CALLBACK=XXXX  
 ```
 亦可參考專案內檔案 .env.example
-
-## 測試帳號密碼
-帳號：example@example.com  
-密碼：example
 
 # 專案設計細節 — Design Details
 User Story @ Figma  
