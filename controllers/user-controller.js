@@ -10,6 +10,7 @@ const userController = {
     const { name, email, password, confirmPassword } = req.body
     User.findOne({ where: { email } }).then(user => {
       if (user) {
+        req.flash('warning_msg', '該用戶名已存在')
         console.log('User already exists')
         return res.render('register', {
           name,

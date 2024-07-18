@@ -4,23 +4,19 @@ const passport = require('../config/passport')
 
 const userController = require('../controllers/user-controller')
 const unitController = require('../controllers/unit-controller')
+const auth = require('../routes/modules/auth')
 const { authenticator } = require('../middleware/auth')
 const { generalErrorHandler } = require('../middleware/error-handler')
 const { rememberEmail } = require('../helpers/auth-helpers')
 
+router.get('/auth', auth)
 router.get('/users/register', userController.registerPage)
 router.post('/users/register', userController.register)
 router.get('/users/login', userController.loginPage)
 router.post('/users/login', rememberEmail, passport.authenticate('local', {
   failureRedirect: '/users/login', failureFlash: true
 }), userController.login)
-router.get('/auth/facebook', passport.authenticate('facebook', {
-  scope: ['email', 'public_profile']
-}))
-router.get('/auth/facebook/callback', passport.authenticate('facebook', {
-  successRedirect: '/',
-  failureRedirect: '/users/login'
-}))
+
 router.get('/users/logout', userController.logout)
 
 router.get('/units/new', authenticator, unitController.unitsCreatePage)
