@@ -18,7 +18,7 @@
 3.試算表資料龐雜時，檢視困難、傷眼傷神又易出錯。  
 4.轉換行政管理系統時，行政人員抗性高。   
 
-### 功能介紹：
+### 專案介紹：
 #### 登入/註冊使用者帳戶
 1. 使用Passport.js 套件管理使用者權限，落實權限控制，省去鎖試算表的麻煩。
 2. 搭配bcrypt.js 進行密碼加密，提高資料安全性。
@@ -49,7 +49,14 @@
 #### 刪除一筆或多筆房產資料
 1. 設有刪除確認機制，防止誤刪。  
 2. 搭配handlebars設計權限管理制度，只有Admin可執行刪除動作。  
-<img src="readMeImg/delete.png" alt="瀏覽功能" width="400">  
+<img src="readMeImg/delete.png" alt="瀏覽功能" width="400">
+
+#### 串接AWS RDS
+1. 串接Amazon Web Services 關聯式資料庫
+2. 確保資料庫穩定、快速、安全，並提供後續良好的可擴張性  
+
+#### Deploy到Render平台
+部署到Render.com Cloud Application Hosting platform，方便快速使用  
 
 # 安裝指南 — Installation Guide
 請依照以下步驟安裝本專案
