@@ -27,7 +27,11 @@ const userController = {
           email,
           password: hash
         }))
-        .then(() => res.redirect('/'))
+        .then(() => {
+          req.flash('success_msg', '您已經成功註冊！請重新登入。')
+          console.log('User successfully created!')
+          res.redirect('/users/login')
+        })
         .catch(err => console.log(err))
     })
   },
