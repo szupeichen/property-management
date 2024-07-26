@@ -34,7 +34,7 @@ const unitController = {
       })
       // 下拉選單顯示其他仲介
       const theRestAgencies = await Agencies.filter(
-        (Agency) => Agency.id !== data.agencyId
+        Agency => Agency.id !== data.agencyId
       )
       // 偵測unit中的已出租有無勾選
       function ifCheckedBox () {
@@ -48,33 +48,38 @@ const unitController = {
       next(err)
     }
   },
-  unitsEdit: (req, res, next) => {
+  unitsEdit: async (req, res, next) => {
     const {
       address, income, annualIncome, startDate, endDate, note, status, agencyId
     } = req.body
-    if (!address || !income) throw new Error('unfilled field')
-    const statusBoolean = (status === 'on')
-    const incomeInt = parseInt(income, 10)
-    const annualIncomeInt = parseInt(annualIncome, 10)
-    Unit.findByPk(req.params.id)
-      .then(unit => {
-        if (!unit) throw new Error("Unit didn't exist!")
-        return unit.update({
-          address,
-          income: incomeInt,
-          annualIncome: annualIncomeInt,
-          startDate,
-          endDate,
-          note,
-          status: statusBoolean,
-          agencyId
-        })
+    try {
+      if (!address || !income) {
+        throw new Error('unfilled field')
+      }
+      // 定義前端各欄位值以符合後端資料庫格式
+      const statusBoolean = (status === 'on')
+      const incomeInt = parseInt(income, 10)
+      const annualIncomeInt = parseInt(annualIncome, 10)
+
+      const unit = await Unit.findByPk(req.params.id)
+      if (!unit) {
+        throw new Error("Unit didn't exist!")
+      }
+      await unit.update({
+        address,
+        income: incomeInt,
+        annualIncome: annualIncomeInt,
+        startDate,
+        endDate,
+        note,
+        status: statusBoolean,
+        agencyId
       })
-      .then((unit) => {
-        req.flash('success_msg', 'Unit was successfully updated')
-        res.redirect(`/units/${unit.id}`)
-      })
-      .catch(err => next(err))
+      req.flash('success_msg', '此筆資訊已成功更新！')
+      res.redirect(`/units/${unit.id}`)
+    } catch (err) {
+      next(err)
+    }
   },
   unitsDeletePage: (req, res) => {
     return Unit.findAll({
