@@ -93,18 +93,23 @@ const unitController = {
       next(err)
     }
   },
-  unitsDelete: (req, res, next) => {
+  unitsDelete: async (req, res, next) => {
     const selectedId = Object.keys(req.body)
-    const selectedIdList = selectedId.map((selectedId) => { return parseInt(selectedId, 10) })
-    return selectedIdList.map(async (id) => {
-      await Unit.findByPk(id)
-        .then(unit => {
-          if (!unit) throw new Error("unit didn't exist!")
-          return unit.destroy()
-        })
-        .then(() => res.redirect('/units/delete'))
-        .catch(err => next(err))
-    })
+    const selectedIdList = selectedId.map(id => parseInt(id, 10))
+    try {
+      await Promise.all(
+        selectedIdList.map(async (id) => {
+          const unit = await Unit.findByPk(id)
+          if (!unit) {
+            throw new Error("unit didn't exist!")
+          }
+          await unit.destroy()
+        }))
+      req.flash('success_msg', '已成功刪除資料！')
+      res.redirect('/units/delete')
+    } catch (err) {
+      next(err)
+    }
   },
   unitsCreatePage: (req, res, next) => {
     return Agency.findAll({
