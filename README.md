@@ -1,10 +1,11 @@
 # 房產資訊管理系統 property-management
 #### 輕鬆擺脫繁雜Excel的租賃管理行政工具  
 點擊連結進入：https://property-management-dcb0.onrender.com  
-或即刻掃描QR Code體驗(初次連線可能須等候約50秒)  
-#### 測試帳號密碼
+或即刻掃描下方QR Code 體驗(初次連線可能須等候約50秒)  
+測試帳號密碼：  
 帳號：example@example.com  
 密碼：example  
+  
 <img src="readMeImg/sideProjectQRcode.png" alt="QR Code" width="200" height="200">  
 
 # 專案介紹 — Description
@@ -15,38 +16,47 @@
 1.試算表不易維護，經常誤刪、誤改資料。  
 2.人員權限不易管理，無法落實權限控制。  
 3.試算表資料龐雜時，檢視困難、傷眼傷神又易出錯。  
-4.轉換行政管理系統時，行政人員抗性高。  
+4.轉換行政管理系統時，行政人員抗性高。   
 
-### 專案優勢：  
-1.使用MySQL關聯式資料庫，資料格式固定，易於維護。 
-2.串接AWS RDS，安全、穩定、將來可擴展性高。
-2.以Passport套件管理使用者權限，落實權限控制，省去鎖試算表的麻煩。  
-3.使用Express框架結合handlebars套件，打造清晰直覺的操作介面，降低資料誤改誤刪機率。  
-4.介面簡潔好上手，降低內部人員訓練成本，無痛轉換行政工具。
-
-### 功能介紹：
+### 專案介紹：
 #### 登入/註冊使用者帳戶
+1. 使用Passport.js 套件管理使用者權限，落實權限控制，省去鎖試算表的麻煩。
+2. 搭配bcrypt.js 進行密碼加密，提高資料安全性。
+3. 串接Meta OAuth2.0 第三方登入。  
 <img src="readMeImg/login_signUp.png" alt="登入及註冊功能" width="200" height="200">
 
 #### 瀏覽所有房產資料
+1. 使用Express 框架結合handlebars 套件，打造清晰直覺的操作介面，降低資料誤改誤刪機率。
+2. 使用MySQL 關聯式資料庫，資料格式固定，易於維護。  
+3. 雲端串接AWS RDS，兼顧資料庫穩定性及可擴展性。  
 <img src="readMeImg/browse.png" alt="瀏覽功能" width="400">  
-一目了然現有資料，並可單獨檢視每筆資料細節，或針對每筆資料進行修改。
 
 #### 檢視一筆房產資料
+1. 使用者可針對單筆資料檢視。  
+2. 使用RESTful 風格API 串接後端路由。  
 <img src="readMeImg/detail.png" alt="瀏覽功能" width="400">  
-針對單筆資料檢視。
 
 #### 新增一筆房產資料
+1. 使用JQuery 動態計算並自動填入【年租金】欄位，達成防呆設計。  
+2. 使用JQuery 搭配後端Async/Await 非同步運算，動態帶入仲介所屬公司及聯絡電話，優化使用者體驗。  
 <img src="readMeImg/creat.png" alt="瀏覽功能" width="400">  
-【月租金】輸入金額後，系統自動計算並填入【年租金】。【服務仲介】選取後，系統自動帶入所屬公司及聯絡電話資料。防呆設計提升使用者體驗。
 
 #### 修改一筆房產資料
+1. 後端使用Promise 語法，確保資料正確性、兼顧提升資料庫效率。  
+2. 後端資料庫boolean值欄位判斷，搭配前端form表格，視覺化【已出租狀態】，優化使用者體驗。   
 <img src="readMeImg/edit.JPG" alt="瀏覽功能" width="400">  
-修改資料時，介面風格一致，減少輸入錯誤機率。
 
 #### 刪除一筆或多筆房產資料
-<img src="readMeImg/delete.png" alt="瀏覽功能" width="400">  
-一次刪除單筆或多筆資料，並設有防誤刪的訊息確認機制。
+1. 設有刪除確認機制，防止誤刪。  
+2. 搭配handlebars設計權限管理制度，只有Admin可執行刪除動作。  
+<img src="readMeImg/delete.png" alt="瀏覽功能" width="400">
+
+#### 串接AWS RDS
+1. 串接Amazon Web Services 關聯式資料庫
+2. 確保資料庫穩定、快速、安全，並提供後續良好的可擴張性  
+
+#### Deploy到Render平台
+部署到Render.com Cloud Application Hosting platform，方便快速使用  
 
 # 安裝指南 — Installation Guide
 請依照以下步驟安裝本專案
