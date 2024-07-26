@@ -81,14 +81,17 @@ const unitController = {
       next(err)
     }
   },
-  unitsDeletePage: (req, res) => {
-    return Unit.findAll({
-      raw: true,
-      nest: true,
-      include: [Agency]
-    })
-      .then((units) => { return res.render('delete', { units }) })
-      .catch((err) => { return res.status(422).json(err) })
+  unitsDeletePage: async (req, res, next) => {
+    try {
+      const units = await Unit.findAll({
+        raw: true,
+        nest: true,
+        include: [Agency]
+      })
+      res.render('delete', { units })
+    } catch (err) {
+      next(err)
+    }
   },
   unitsDelete: (req, res, next) => {
     const selectedId = Object.keys(req.body)
