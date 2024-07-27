@@ -15,13 +15,16 @@ const unitController = {
       next(err)
     }
   },
-  unitsId: (req, res, next) => {
+  unitsId: async (req, res, next) => {
     const id = req.params.id
-    return Unit.findByPk(id, {
-      include: [Agency]
-    })
-      .then(unit => res.render('detail', { unit }))
-      .catch(err => next(err))
+    try {
+      const unit = await Unit.findByPk(id, {
+        include: [Agency]
+      })
+      res.render('detail', { unit })
+    } catch (err) {
+      next(err)
+    }
   },
   unitsEditPage: async (req, res, next) => {
     const id = req.params.id
