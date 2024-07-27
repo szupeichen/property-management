@@ -14,20 +14,21 @@ passport.use(new LocalStrategy(
     passReqToCallback: true
   },
   // authenticate user
-  (req, email, password, cb) => {
-    User.findOne({ where: { email } })
-      .then(user => {
-        if (!user) return cb(null, false, req.flash('warning_msg', '帳號或密碼輸入錯誤！'))
-        bcrypt.compare(password, user.password).then(res => {
-          if (!res) return cb(null, false, req.flash('warning_msg', '帳號或密碼輸入錯誤！'))
-          return cb(null, user)
-        })
-      })
-      .catch(error => {
-        console.error('查詢用戶時出錯(at passport.js):', error)
-      })
-  }
-))
+  async (req, email, password, cb) => {
+    try {
+      if (!email.trim() || !password.trim()) {
+        throw new Error('請輸入帳號及密碼！')
+      }
+      const user = await User.findOne({ where: { email } })
+      if (!user) { return cb(null, false, req.flash('warning_msg', '帳號或密碼輸入錯誤！')) }
+      const res = await bcrypt.compare(password, user.password)
+      if (!res) { return cb(null, false, req.flash('warning_msg', '帳號或密碼輸入錯誤！')) }
+      return cb(null, user)
+    } catch (err) {
+      console.log('查詢用戶時出錯(at passport.js):', err)
+    }
+  }))
+
 // Facebook login setting
 passport.use(
   new FacebookStrategy({
