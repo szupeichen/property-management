@@ -50,7 +50,7 @@ passport.use(
         email,
         password: hash
       })
-      done(null, newUser)
+      return done(null, newUser)
     } catch (err) {
       done(err, false)
     }
