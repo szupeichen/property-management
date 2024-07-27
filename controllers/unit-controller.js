@@ -121,7 +121,7 @@ const unitController = {
       next(err)
     }
   },
-  unitsCreate: (req, res, next) => {
+  unitsCreate: async (req, res, next) => {
     const {
       address, income, annualIncome, startDate, endDate, note, status, agencyId
     } = req.body
@@ -129,21 +129,22 @@ const unitController = {
     const statusBoolean = (status === 'on')
     const incomeInt = parseInt(income, 10)
     const annualIncomeInt = parseInt(annualIncome, 10)
-    Unit.create({
-      address,
-      income: incomeInt,
-      annualIncome: annualIncomeInt,
-      startDate,
-      endDate,
-      note,
-      status: statusBoolean,
-      agencyId
-    })
-      .then((unit) => {
-        req.flash('success_msg', 'Unit was successfully created')
-        res.redirect(`/units/${unit.id}`)
+    try {
+      const unit = await Unit.create({
+        address,
+        income: incomeInt,
+        annualIncome: annualIncomeInt,
+        startDate,
+        endDate,
+        note,
+        status: statusBoolean,
+        agencyId
       })
-      .catch(err => next(err))
+      req.flash('success_msg', '資料已成功新增！')
+      res.redirect(`/units/${unit.id}`)
+    } catch (err) {
+      next(err)
+    }
   },
   // 供jQuery ajax取得仲介資料
   getAgencyDetail: async (req, res, next) => {
