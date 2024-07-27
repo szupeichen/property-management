@@ -37,31 +37,30 @@ passport.use(
     callbackURL: process.env.FACEBOOK_CALLBACK,
     profileFields: ['email', 'displayName']
   },
-  (accessToken, refreshToken, profile, done) => {
+  async (accessToken, refreshToken, profile, done) => {
     const { name, email } = profile._json
-    User.findOne({ where: { email } })
-      .then(user => {
-        if (user) return done(null, user)
-        const randomPassword = Math.random().toString(36).slice(-8)
-        bcrypt
-          .genSalt(10)
-          .then(salt => bcrypt.hash(randomPassword, salt))
-          .then(hash => User.create({
-            name,
-            email,
-            password: hash
-          }))
-          .then(user => done(null, user))
-          .catch(err => done(err, false))
+    try {
+      const user = await User.findOne({ where: { email } })
+      if (user) return done(null, user)
+      const randomPassword = Math.random().toString(36).slice(-8)
+      const salt = await bcrypt.genSalt(10)
+      const hash = await bcrypt.hash(randomPassword, salt)
+      const newUser = await User.create({
+        name,
+        email,
+        password: hash
       })
+      done(null, newUser)
+    } catch (err) {
+      done(err, false)
+    }
   }))
 // serialize and deserialize user
 passport.serializeUser((user, cb) => {
   cb(null, user.id)
 })
-passport.deserializeUser((id, cb) => {
-  User.findByPk(id).then(user => {
-    return cb(null, user)
-  })
+passport.deserializeUser(async (id, cb) => {
+  const user = await User.findByPk(id)
+  return cb(null, user)
 })
 module.exports = passport
