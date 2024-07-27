@@ -111,12 +111,15 @@ const unitController = {
       next(err)
     }
   },
-  unitsCreatePage: (req, res, next) => {
-    return Agency.findAll({
-      raw: true
-    })
-      .then((Agencies) => { res.render('new', { Agencies }) })
-      .catch(err => next(err))
+  unitsCreatePage: async (req, res, next) => {
+    try {
+      const Agencies = await Agency.findAll({
+        raw: true
+      })
+      res.render('new', { Agencies })
+    } catch (err) {
+      next(err)
+    }
   },
   unitsCreate: (req, res, next) => {
     const {
