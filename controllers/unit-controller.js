@@ -3,14 +3,17 @@ const { Unit } = db
 const { Agency } = db
 
 const unitController = {
-  unitsAll: (req, res, next) => {
-    return Unit.findAll({
-      raw: true,
-      nest: true,
-      include: [Agency]
-    })
-      .then((units) => { return res.render('index', { units }) })
-      .catch((err) => next(err))
+  unitsAll: async (req, res, next) => {
+    try {
+      const units = await Unit.findAll({
+        raw: true,
+        nest: true,
+        include: [Agency]
+      })
+      res.render('index', { units })
+    } catch (err) {
+      next(err)
+    }
   },
   unitsId: (req, res, next) => {
     const id = req.params.id
