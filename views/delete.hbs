@@ -1,7 +1,7 @@
 <div>
   <form action="/units?_method=DELETE" method="POST" style="display: inline;">
     <div class="mb-3">
-      <a href="/" class="btn btn-warning me-3">取消</a>
+      <a href="/" class="btn btn-warning me-3">回首頁</a>
       {{#if user.isAdmin }}
       <button class="btn btn-danger" type="submit"
         onclick="return confirm('確定要刪除嗎？')">刪除選取項目</button>
