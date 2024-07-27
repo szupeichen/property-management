@@ -125,11 +125,14 @@ const unitController = {
     const {
       address, income, annualIncome, startDate, endDate, note, status, agencyId
     } = req.body
-    if (!address || !income) throw new Error('unfilled field')
+    // 定義前端各欄位值以符合後端資料庫格式
     const statusBoolean = (status === 'on')
     const incomeInt = parseInt(income, 10)
     const annualIncomeInt = parseInt(annualIncome, 10)
     try {
+      if (!address.trim() || !income.trim()) {
+        throw new Error('請確認地址與租金已填寫！')
+      }
       const unit = await Unit.create({
         address,
         income: incomeInt,
