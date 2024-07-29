@@ -9,7 +9,8 @@
 <table class="table text-end">
   <thead class="table-dark">
     <tr class="table-secondary">
-      <th scope="col" class="text-center">地點</th>
+      <th scope="col" class="text-center">縣市</th>
+      <th scope="col" class="text-center">地址</th>
       <th scope="col">
         <p class="m-0">租約訖日</p>
         <p class="m-0">(YYYY-MM-DD)</p>
@@ -24,6 +25,7 @@
   <tbody>
     {{#each units}}
     <tr>
+      <td scope="col" class="text-center">{{ this.city }}</td>
       <td scope="col" class="text-center">{{ this.address }}</td>
       <td scope="col">{{ formatDate this.endDate }}</td>
       <td scope="col">{{ this.income }}</td>

@@ -11,7 +11,8 @@
       <thead class="table-dark">
         <tr class="table-secondary">
           <th></th>
-          <th scope="col" class="text-center">地點</th>
+          <th scope="col" class="text-center">縣市</th>
+          <th scope="col" class="text-center">地址</th>
           <th scope="col">
             <p class="m-0">租約訖日</p>
             <p class="m-0">(YYYY/MM/DD)</p>
@@ -28,6 +29,7 @@
           <td>
             <input class="me-1" type="checkbox" name="{{ this.id }}">
           </td>
+          <td scope="col" class="text-center">{{ this.city }}</td>
           <td scope="col" class="text-center">{{ this.address }}</td>
           <td scope="col">{{ formatDate this.endDate }}</td>
           <td scope="col">{{ this.income }}</td>

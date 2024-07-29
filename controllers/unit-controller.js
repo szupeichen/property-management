@@ -58,12 +58,9 @@ const unitController = {
   },
   unitsEdit: async (req, res, next) => {
     const {
-      address, income, annualIncome, startDate, endDate, note, status, agencyId
+      city, address, income, annualIncome, startDate, endDate, note, status, agencyId
     } = req.body
     try {
-      if (!address.trim() || !income.trim()) {
-        throw new Error('請確認地址與租金已填寫！')
-      }
       // 定義前端各欄位值以符合後端資料庫格式
       const statusBoolean = (status === 'on')
       const incomeInt = parseInt(income, 10)
@@ -74,7 +71,12 @@ const unitController = {
       if (!unit) {
         throw new Error("Unit didn't exist!")
       }
+      // 檢查各欄位是否填寫正確
+      if (!city.trim() || !address.trim() || !income.trim()) {
+        throw new Error('請確認縣市地址與租金已填寫！')
+      }
       await unit.update({
+        city,
         address,
         income: incomeInt,
         annualIncome: annualIncomeInt,
@@ -133,7 +135,7 @@ const unitController = {
   },
   unitsCreate: async (req, res, next) => {
     const {
-      address, income, annualIncome, startDate, endDate, note, status, agencyId
+      city, address, income, annualIncome, startDate, endDate, note, status, agencyId
     } = req.body
     // 定義前端各欄位值以符合後端資料庫格式
     const statusBoolean = (status === 'on')
@@ -146,6 +148,7 @@ const unitController = {
         throw new Error('請確認地址與租金已填寫！')
       }
       const unit = await Unit.create({
+        city,
         address,
         income: incomeInt,
         annualIncome: annualIncomeInt,
