@@ -61,14 +61,15 @@ const unitController = {
       address, income, annualIncome, startDate, endDate, note, status, agencyId
     } = req.body
     try {
-      if (!address || !income) {
-        throw new Error('unfilled field')
+      if (!address.trim() || !income.trim()) {
+        throw new Error('請確認地址與租金已填寫！')
       }
       // 定義前端各欄位值以符合後端資料庫格式
       const statusBoolean = (status === 'on')
       const incomeInt = parseInt(income, 10)
       const annualIncomeInt = parseInt(annualIncome, 10)
-
+      // 記錄修改此筆資料的user
+      const userId = req.user.dataValues.id
       const unit = await Unit.findByPk(req.params.id)
       if (!unit) {
         throw new Error("Unit didn't exist!")
@@ -81,7 +82,8 @@ const unitController = {
         endDate,
         note,
         status: statusBoolean,
-        agencyId
+        agencyId,
+        userId
       })
       req.flash('success_msg', '此筆資訊已成功更新！')
       res.redirect(`/units/${unit.id}`)
@@ -121,8 +123,6 @@ const unitController = {
   },
   unitsCreatePage: async (req, res, next) => {
     try {
-      console.log(`req在這裡:${req}`)
-      console.log(`req.params是這個:${req.params}`)
       const Agencies = await Agency.findAll({
         raw: true
       })
@@ -139,6 +139,7 @@ const unitController = {
     const statusBoolean = (status === 'on')
     const incomeInt = parseInt(income, 10)
     const annualIncomeInt = parseInt(annualIncome, 10)
+    // 記錄創建此筆資料的user
     const userId = req.user.dataValues.id
     try {
       if (!address.trim() || !income.trim()) {
