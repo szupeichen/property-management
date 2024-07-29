@@ -1,4 +1,3 @@
-const { getUser } = require('../helpers/auth-helpers')
 const db = require('../models')
 const { Unit } = db
 const { Agency } = db
