@@ -3,7 +3,7 @@
   <a href="{{ unit.id }}/edit" class="btn btn-warning">修改</a>
 </div>
 <table class="table w-100">
-  <tr class="table-secondary row mx-1">
+  <tr class="table-warning row mx-1">
     <th class="col-4">地址：{{unit.address}}</th>
     <th class="col-4">月租金：{{unit.income}}</th>
     <th class="col-4">年租金：{{unit.annualIncome}}</th>
@@ -20,5 +20,8 @@
   </tr>
   <tr class="row mx-1">
     <td>備註：{{unit.note}}</td>
+  </tr>
+  <tr class="row mx-1">
+    <td class="table-secondary">Latest modified by：{{unit.User.name}}</td>
   </tr>
 </table>

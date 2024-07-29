@@ -1,6 +1,8 @@
+const { getUser } = require('../helpers/auth-helpers')
 const db = require('../models')
 const { Unit } = db
 const { Agency } = db
+const { User } = db
 
 const unitController = {
   unitsAll: async (req, res, next) => {
@@ -19,7 +21,7 @@ const unitController = {
     const id = req.params.id
     try {
       const unit = await Unit.findByPk(id, {
-        include: [Agency]
+        include: [Agency, User]
       })
       res.render('detail', { unit })
     } catch (err) {
@@ -119,6 +121,8 @@ const unitController = {
   },
   unitsCreatePage: async (req, res, next) => {
     try {
+      console.log(`req在這裡:${req}`)
+      console.log(`req.params是這個:${req.params}`)
       const Agencies = await Agency.findAll({
         raw: true
       })
@@ -135,6 +139,7 @@ const unitController = {
     const statusBoolean = (status === 'on')
     const incomeInt = parseInt(income, 10)
     const annualIncomeInt = parseInt(annualIncome, 10)
+    const userId = req.user.dataValues.id
     try {
       if (!address.trim() || !income.trim()) {
         throw new Error('請確認地址與租金已填寫！')
@@ -147,7 +152,8 @@ const unitController = {
         endDate,
         note,
         status: statusBoolean,
-        agencyId
+        agencyId,
+        userId
       })
       req.flash('success_msg', '資料已成功新增！')
       res.redirect(`/units/${unit.id}`)
