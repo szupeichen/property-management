@@ -2,22 +2,34 @@ const db = require('../models')
 const { Unit } = db
 const { Agency } = db
 const { User } = db
+const { getUser, getId, dataTransfer, ifCheckedBox } = require('../helpers/auth-helpers')
+const { getOffset, getPagination } = require('../helpers/pagination-helper')
 
 const unitController = {
   unitsAll: async (req, res, next) => {
     try {
-      const units = await Unit.findAll({
+      // define pagination
+      const DEFAULT_LIMIT = 9
+      const page = Number(req.query.page) || 1
+      const limit = DEFAULT_LIMIT
+      const offset = getOffset(limit, page)
+      // get all the units
+      const units = await Unit.findAndCountAll({
         raw: true,
         nest: true,
-        include: [Agency]
+        include: [Agency],
+        limit,
+        offset
       })
-      res.render('index', { units })
+      const unit = units.rows
+      res.render('index', { units: unit, pagination: getPagination(limit, page, units.count) })
     } catch (err) {
+      console.log(err)
       next(err)
     }
   },
   unitsId: async (req, res, next) => {
-    const id = req.params.id
+    const id = getId(req)
     try {
       const unit = await Unit.findByPk(id, {
         include: [Agency, User]
@@ -28,13 +40,13 @@ const unitController = {
     }
   },
   unitsEditPage: async (req, res, next) => {
-    const id = req.params.id
-    let statusTrue
+    const id = getId(req)
     try {
       const unit = await Unit.findByPk(id, {
         include: [Agency]
       })
       const data = unit.dataValues
+      console.log(data)
       const Agencies = await Agency.findAll({
         raw: true,
         nest: true
@@ -44,13 +56,8 @@ const unitController = {
         Agency => Agency.id !== data.agencyId
       )
       // 偵測unit中的已出租有無勾選
-      function ifCheckedBox () {
-        if (data.status === true) {
-          statusTrue = true
-        }
-      }
-      await ifCheckedBox()
-      await res.render('edit', { unit, theRestAgencies, statusTrue })
+      const status = ifCheckedBox(data)
+      await res.render('edit', { unit, theRestAgencies, status })
     } catch (err) {
       next(err)
     }
@@ -59,13 +66,11 @@ const unitController = {
     const {
       city, address, income, annualIncome, startDate, endDate, note, status, agencyId
     } = req.body
+    // 處理前端各欄位值以符合後端資料庫格式
+    const { statusBoolean, incomeInt, annualIncomeInt } = dataTransfer(status, income, annualIncome)
+    // 記錄修改此筆資料的user
+    const userId = getUser(req).dataValues.id
     try {
-      // 定義前端各欄位值以符合後端資料庫格式
-      const statusBoolean = (status === 'on')
-      const incomeInt = parseInt(income, 10)
-      const annualIncomeInt = parseInt(annualIncome, 10)
-      // 記錄修改此筆資料的user
-      const userId = req.user.dataValues.id
       const unit = await Unit.findByPk(req.params.id)
       if (!unit) {
         throw new Error("Unit didn't exist!")
@@ -136,12 +141,10 @@ const unitController = {
     const {
       city, address, income, annualIncome, startDate, endDate, note, status, agencyId
     } = req.body
-    // 定義前端各欄位值以符合後端資料庫格式
-    const statusBoolean = (status === 'on')
-    const incomeInt = parseInt(income, 10)
-    const annualIncomeInt = parseInt(annualIncome, 10)
+    // 處理前端各欄位值以符合後端資料庫格式
+    const { statusBoolean, incomeInt, annualIncomeInt } = dataTransfer(status, income, annualIncome)
     // 記錄創建此筆資料的user
-    const userId = req.user.dataValues.id
+    const userId = getUser(req).dataValues.id
     try {
       if (!address.trim() || !income.trim()) {
         throw new Error('請確認地址與租金已填寫！')

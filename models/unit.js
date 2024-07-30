@@ -10,7 +10,6 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate (models) {
-      // define association here
       Unit.belongsTo(models.Agency, { foreignKey: 'agencyId' })
       Unit.belongsTo(models.User, { foreignKey: 'userId' })
     }
@@ -23,7 +22,23 @@ module.exports = (sequelize, DataTypes) => {
     startDate: DataTypes.DATE(6),
     endDate: DataTypes.DATE(6),
     note: DataTypes.TEXT,
-    status: DataTypes.BOOLEAN
+    status: DataTypes.BOOLEAN,
+    agencyId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Agencies',
+        key: 'id'
+      }
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Users',
+        key: 'id'
+      }
+    }
   }, {
     sequelize,
     modelName: 'Unit',

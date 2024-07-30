@@ -9,8 +9,9 @@
     <th class="col-4">整年租金：{{unit.annualIncome}}</th>
   </tr>
   <tr class="row mx-1">
-    <td class="col-4">租約起日：{{formatDate unit.startDate}}</td>
-    <td class="col-4">租約訖日：{{formatDate unit.endDate}}</td>
+    <td class="col-4">租約起日：{{#if unit.startDate }}{{formatDate unit.startDate}}{{else}}{{/if}}
+      </td>
+    <td class="col-4">租約訖日：{{#if unit.endDate }}{{formatDate unit.endDate}}{{else}}{{/if}}</td>
     <td class="col-4">出租狀態：{{#if unit.status }}已出租{{else}}未出租{{/if}}</td>
   </tr>
   <tr class="row mx-1">

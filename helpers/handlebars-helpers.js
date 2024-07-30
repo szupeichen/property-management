@@ -4,5 +4,8 @@ module.exports = {
   // 取得當年年份作為 footer.hbs currentYear 的值
   currentYear: () => dayjs().year(),
   // 格式化租約起訖日
-  formatDate: (date) => dayjs(date).format('YYYY-MM-DD')
+  formatDate: (date) => dayjs(date).format('YYYY-MM-DD'),
+  ifCond: function (a, b, options) {
+    return a === b ? options.fn(this) : options.inverse(this)
+  }
 }

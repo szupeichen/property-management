@@ -10,7 +10,6 @@ const userController = {
     const { name, email, password, confirmPassword } = req.body
     try {
       const user = await User.findOne({ where: { email } })
-      console.log(user)
       if (user) {
         req.flash('warning_msg', '該用戶名已存在')
         console.log('User already exists')
