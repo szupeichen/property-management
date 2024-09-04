@@ -4,6 +4,7 @@ const { Agency } = db
 const { User } = db
 const { getUser, getId, dataTransfer, ifCheckedBox } = require('../helpers/auth-helpers')
 const { getOffset, getPagination } = require('../helpers/pagination-helper')
+const { where } = require('sequelize')
 
 const unitController = {
   unitsAll: async (req, res, next) => {
@@ -163,6 +164,22 @@ const unitController = {
       })
       req.flash('success_msg', '資料已成功新增！')
       res.redirect(`/units/${unit.id}`)
+    } catch (err) {
+      next(err)
+    }
+  },
+  // 篩選filter
+  unitsFilterAgencies: async (req, res, next) => {
+    const { clause } = req.body
+    console.log(clause)
+    try {
+      const units = await Unit.findAll(
+        {
+          where: clause,
+          order: [['date', 'DESC']],
+          include: [Agency]
+        })
+      res.render('index', { units })
     } catch (err) {
       next(err)
     }
