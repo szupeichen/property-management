@@ -169,7 +169,7 @@ const unitController = {
     }
   },
   // 篩選filter
-  unitsFilterAgencies: async (req, res, next) => {
+  unitsFilterByAgency: async (req, res, next) => {
     const { clause } = req.body
     console.log(clause)
     try {
