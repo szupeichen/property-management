@@ -17,7 +17,7 @@
         url: '/getAgencyDetail',
         method: 'GET',
         data: { agencyId: selectedAgencyId },
-        success: function (res) {
+        success: function (res) { // 請求成功時發動此函數
           if (res === null) {
             $('#agencyCompany').val('');
             $('#agencyPhoneNumber').val('')
@@ -28,5 +28,13 @@
         }
       })
     })
+    // filter
+    const selectedAgencyId = $(this).val();
+    $.ajax({
+      url: '/unitsFilterByAgency',
+      method: 'GET',
+      data: { agencyId: selectedAgencyId },
+      
+    }) 
   })
 </script>
