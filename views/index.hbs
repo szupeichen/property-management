@@ -19,11 +19,11 @@
       </select>
     </div>
     <div class="g-col-3">
-      <select class="form-select bg-light.bg-gradient" aria-label="filter">
+      <select class="form-select bg-light.bg-gradient" id="agencyFilter" name="agencyFilter" aria-label="filter">
         <option selected>依房仲篩選</option>
-        <option value="1"></option>
-        <option value="2"></option>
-        <option value="3">Three</option>
+        {{#each Agencies}}
+        <option value="{{this.id}}">{{this.name}}</option>
+        {{/each}}
       </select>
     </div>
     <div class="g-col-3">
@@ -42,66 +42,74 @@
         <option value="3">Three</option>
       </select>
     </div>
+  </div>
+
+
+  <table class="table text-end">
+    <thead class="table-dark">
+      <tr class="table-secondary">
+        <th scope="col" class="text-center">縣市</th>
+        <th scope="col" class="text-center">地址</th>
+        <th scope="col">
+          <p class="m-0">租約訖日</p>
+          <p class="m-0">(YYYY-MM-DD)</p>
+        </th>
+        <th scope="col">月租金</th>
+        <th scope="col">年租金</th>
+        <th scope="col">服務仲介</th>
+        <th scope="col" class="text-center">狀態</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {{!-- {{> table-template}} --}}
+     
+      {{#each units}}
+      <tr>
+        <td scope="col" class="text-center">{{ this.city }}</td>
+        <td scope="col" class="text-center">{{ this.address }}</td>
+        <td scope="col">{{#if this.endDate }}{{formatDate this.endDate}}{{else}}{{/if}}</td>
+        <td scope="col">{{ this.income }}</td>
+        <td scope="col">{{ this.annualIncome }}</td>
+        <td scope="col">{{ this.Agency.name }}</td>
+        <td scope="col" class="text-center">{{#if this.status }}已出租{{else}}未出租{{/if}}</td>
+        <td scope="col" class="text-center d-flex">
+          <div class="w-50 me-2"><a class="btn btn-outline-warning w-100" href="./units/{{ this.id }}">detail</a>
+          </div>
+          <div class="w-50"><a class="btn btn-outline-warning w-100" href="./units/{{ this.id }}/edit">edit</a></div>
+        </td>
+      </tr>
+      {{/each}}
+    
+    </tbody>
+  </table>
+  {{!-- pagination --}}
+  <nav aria-label="Page navigation">
+    <ul class="pagination d-flex justify-content-center">
+      <li class="page-item {{#ifCond pagination.currentPage 1}}disabled{{/ifCond}}">
+        <a class="page-link" href="/?page={{pagination.prev}}" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      {{#each pagination.pages}}
+      {{#ifCond this ../pagination.currentPage}}
+      <li class="page-item active"><a class="page-link" href="/?page={{this}}">{{this}}</a></li>
+      {{else}}
+      <li class="page-item">
+        <a class="page-link" href="/?page={{this}}">{{this}}</a>
+      </li>
+      {{/ifCond}}
+      {{/each}}
+      <li class="page-item {{#ifCond pagination.currentPage pagination.totalPage}}disabled{{/ifCond}}">
+        <a class="page-link" href="/?page={{pagination.next}}" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
 </div>
 
-
-    <table class="table text-end">
-      <thead class="table-dark">
-        <tr class="table-secondary">
-          <th scope="col" class="text-center">縣市</th>
-          <th scope="col" class="text-center">地址</th>
-          <th scope="col">
-            <p class="m-0">租約訖日</p>
-            <p class="m-0">(YYYY-MM-DD)</p>
-          </th>
-          <th scope="col">月租金</th>
-          <th scope="col">年租金</th>
-          <th scope="col">服務仲介</th>
-          <th scope="col" class="text-center">狀態</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each units}}
-        <tr>
-          <td scope="col" class="text-center">{{ this.city }}</td>
-          <td scope="col" class="text-center">{{ this.address }}</td>
-          <td scope="col">{{#if this.endDate }}{{formatDate this.endDate}}{{else}}{{/if}}</td>
-          <td scope="col">{{ this.income }}</td>
-          <td scope="col">{{ this.annualIncome }}</td>
-          <td scope="col">{{ this.Agency.name }}</td>
-          <td scope="col" class="text-center">{{#if this.status }}已出租{{else}}未出租{{/if}}</td>
-          <td scope="col" class="text-center d-flex">
-            <div class="w-50 me-2"><a class="btn btn-outline-warning w-100" href="./units/{{ this.id }}">detail</a>
-            </div>
-            <div class="w-50"><a class="btn btn-outline-warning w-100" href="./units/{{ this.id }}/edit">edit</a></div>
-          </td>
-        </tr>
-        {{/each}}
-      </tbody>
-    </table>
-    {{!-- pagination --}}
-    <nav aria-label="Page navigation">
-      <ul class="pagination d-flex justify-content-center">
-        <li class="page-item {{#ifCond pagination.currentPage 1}}disabled{{/ifCond}}">
-          <a class="page-link" href="/?page={{pagination.prev}}" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        {{#each pagination.pages}}
-        {{#ifCond this ../pagination.currentPage}}
-        <li class="page-item active"><a class="page-link" href="/?page={{this}}">{{this}}</a></li>
-        {{else}}
-        <li class="page-item">
-          <a class="page-link" href="/?page={{this}}">{{this}}</a>
-        </li>
-        {{/ifCond}}
-        {{/each}}
-        <li class="page-item {{#ifCond pagination.currentPage pagination.totalPage}}disabled{{/ifCond}}">
-          <a class="page-link" href="/?page={{pagination.next}}" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </div>
+{{!-- table-template script --}}
+<script src="../views/partials/table-template.hbs"></script>
+{{!-- jQuery --}}
+{{> jQuery-script}}

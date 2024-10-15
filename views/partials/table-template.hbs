@@ -1,0 +1,18 @@
+<script id="table-template" type="text/x-handlebars-template">
+{{#each units}}
+<tr>
+  <td scope="col" class="text-center">{{ this.city }}</td>
+  <td scope="col" class="text-center">{{ this.address }}</td>
+  <td scope="col">{{#if this.endDate }}{{formatDate this.endDate}}{{else}}{{/if}}</td>
+  <td scope="col">{{ this.income }}</td>
+  <td scope="col">{{ this.annualIncome }}</td>
+  <td scope="col">{{ this.Agency.name }}</td>
+  <td scope="col" class="text-center">{{#if this.status }}已出租{{else}}未出租{{/if}}</td>
+  <td scope="col" class="text-center d-flex">
+    <div class="w-50 me-2"><a class="btn btn-outline-warning w-100" href="./units/{{ this.id }}">detail</a>
+    </div>
+    <div class="w-50"><a class="btn btn-outline-warning w-100" href="./units/{{ this.id }}/edit">edit</a></div>
+  </td>
+</tr>
+{{/each}}
+</script>

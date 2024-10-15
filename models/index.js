@@ -8,6 +8,7 @@ const basename = path.basename(__filename)
 const env = process.env.NODE_ENV || 'development'
 const config = require(path.resolve(__dirname, '../config/config.json'))[env]
 const db = {}
+const serverCa = [fs.readFileSync('/var/www/html/DigiCertGlobalRootCA.crt.pem', 'utf8')]
 
 // belows are original setting
 let sequelize
@@ -22,7 +23,11 @@ if (config.use_env_variable) {
     {
       host: process.env.DB_HOST,
       dialect: 'mysql',
-      port: process.env.DB_PORT
+      port: process.env.DB_PORT,
+      ssl: {
+        rejectUnauthorized: true,
+        ca: serverCa
+      }
     }
   )
 }

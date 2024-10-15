@@ -4,7 +4,6 @@ const { Agency } = db
 const { User } = db
 const { getUser, getId, dataTransfer, ifCheckedBox } = require('../helpers/auth-helpers')
 const { getOffset, getPagination } = require('../helpers/pagination-helper')
-const { where } = require('sequelize')
 
 const unitController = {
   unitsAll: async (req, res, next) => {
@@ -22,8 +21,12 @@ const unitController = {
         limit,
         offset
       })
+      // for filter by Agency
+      const Agencies = await Agency.findAll({
+        raw: true
+      })
       const unit = units.rows
-      res.render('index', { units: unit, pagination: getPagination(limit, page, units.count) })
+      res.render('index', { units: unit, pagination: getPagination(limit, page, units.count), Agencies })
     } catch (err) {
       console.log(err)
       next(err)
@@ -168,18 +171,18 @@ const unitController = {
       next(err)
     }
   },
-  // 篩選filter
+  // filter
   unitsFilterByAgency: async (req, res, next) => {
-    const { clause } = req.body
-    console.log(clause)
+    const clause = req.query.selectedAgencyId
     try {
-      const units = await Unit.findAll(
-        {
-          where: clause,
-          order: [['date', 'DESC']],
-          include: [Agency]
-        })
-      res.render('index', { units })
+      const units = await Unit.findAll({
+        where: {
+          agencyId: clause
+        },
+        include: [Agency]
+      })
+      console.log(JSON.stringify(units))
+      res.json(units)
     } catch (err) {
       next(err)
     }

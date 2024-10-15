@@ -29,12 +29,34 @@
       })
     })
     // filter
-    const selectedAgencyId = $(this).val();
-    $.ajax({
-      url: '/unitsFilterByAgency',
-      method: 'GET',
-      data: { agencyId: selectedAgencyId },
-      
-    }) 
+  //  $.get('../partials/table-template.hbs', function (tableTemplate) {
+    //  const template = Handlebars.compile(tableTemplate);
+      const tableTemplate = $('#table-template').html();
+    const template = Handlebars.compile(tableTemplate);
+      $('#agencyFilter').change(function () {
+        const selectedAgencyId = $(this).val();
+        console.log('Selected Agency ID:', selectedAgencyId);
+        $.ajax({
+          url: '/unitsFilterByAgency',
+          method: 'GET',
+          data: { selectedAgencyId },
+          success: function (data) {
+            const tbody = $('table tbody');
+            tbody.empty();
+            if (data.length > 0) {
+              // 如果有資料，使用 Handlebars 模板渲染表格
+              const html = template({ units: data });
+              tbody.append(html);
+            } else {
+              // 沒有資料時顯示提示訊息
+              tbody.append('<tr><td colspan="8" class="text-center">沒有符合的單位。</td></tr>');
+            }
+          },
+          error: function (err) {
+            console.error('Failed to load units', err);
+          }
+          
+      })
+    })
   })
 </script>
