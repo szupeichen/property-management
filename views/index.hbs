@@ -1,24 +1,24 @@
-<div class="h-100 container-fluid">
+<div class="h-100 container">
   {{!-- 新增/刪除按鈕 --}}
   <div class="row my-3">
-    <div class="col-auto">
-      <a href="/units/new" class="btn btn-warning">新增房產單位</a>
+    <div class="col-3 col-sm-2">
+      <a href="/units/new" class="btn btn-warning w-100">新增房產單位</a>
     </div>
     {{#if user.isAdmin }}
-    <div class="col-auto">
+    <div class="col-3 col-sm-2">
       <form action="/units/delete" method="GET" style="display: inline;">
-        <button class="btn btn-danger" type="submit">刪除房產單位</button>
+        <button class="btn btn-danger w-100" type="submit">刪除房產單位</button>
       </form>
     </div>
     {{/if}}
   </div>
   {{!-- 篩選按鈕 --}}
   <div class="row mb-3">
-    <div class="col">
+    <div class="col-3 col-sm-2">
       <input type="text" class="form-control" placeholder="輸入關鍵字" aria-label="searchBar"
         aria-describedby="basic-addon1">
     </div>
-    <div class="col">
+    <div class="col-3 col-sm-2">
       <select class="form-select bg-light.bg-gradient" id="counterFilter" name="counterFilter" aria-label="filter">
         <option selected>依縣市篩選</option>
         {{#each Units}}
@@ -26,7 +26,7 @@
         {{/each}}
       </select>
     </div>
-    <div class="col">
+    <div class="col-3 col-sm-2">
       <select class="form-select bg-light.bg-gradient" id="agencyFilter" name="agencyFilter" aria-label="agencyFilter">
         <option selected>依房仲篩選</option>
         {{#each Agencies}}
@@ -34,16 +34,16 @@
         {{/each}}
       </select>
     </div>
-    <div class="col">
+    <div class="col-3 col-sm-2">
       <select class="form-select bg-light.bg-gradient" aria-label="dateFilter">
         <option selected>日期排序</option>
         <option value="">日期近至遠</option>
         <option value="1">日期遠至近</option>
       </select>
     </div>
-    <div class="col-2">
+    <div class="col-3 col-sm-2">
       <form action="/" method="get">
-        <button type="button" class="btn btn-secondary">搜索</button>
+        <button type="button" class="btn btn-secondary w-100">搜索</button>
       </form>
     </div>
 
