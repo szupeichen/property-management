@@ -50,21 +50,23 @@
 
   </div>
   {{!-- 資料顯示區 --}}
+  {{!-- 以row包住一個col來讓寬度能自動和前面的按鈕對齊 --}}
   <div class="row">
     <div class="col">
-      <table class="table text-end">
-        <thead class="table-dark">
-          <tr class="table-secondary">
-            <th scope="col" class="text-center">縣市</th>
-            <th scope="col" class="text-center">地址</th>
+      {{!-- 資料表格 --}}
+      <table class="table">
+        <thead class="table-secondary">
+          <tr scope="row" class="text-center">
+            <th scope="col">縣市</th>
+            <th scope="col">地址</th>
             <th scope="col">
               <p class="m-0">租約訖日</p>
-              <p class="m-0">(YYYY-MM-DD)</p>
+              <p class="m-0"><small>(YYYY-MM-DD)</small></p>
             </th>
-            <th scope="col">月租金</th>
-            <th scope="col">年租金</th>
+            <th scope="col" class="col-md-1">月租金</th>
+            <th scope="col" class="col-md-1">年租金</th>
             <th scope="col">服務仲介</th>
-            <th scope="col" class="text-center">狀態</th>
+            <th scope="col">狀態</th>
             <th></th>
           </tr>
         </thead>
@@ -72,18 +74,22 @@
           {{!-- {{> table-template}} --}}
 
           {{#each units}}
-          <tr>
-            <td scope="col" class="text-center">{{ this.city }}</td>
-            <td scope="col" class="text-center">{{ this.address }}</td>
-            <td scope="col">{{#if this.endDate }}{{formatDate this.endDate}}{{else}}{{/if}}</td>
-            <td scope="col">{{ this.income }}</td>
-            <td scope="col">{{ this.annualIncome }}</td>
-            <td scope="col">{{ this.Agency.name }}</td>
-            <td scope="col" class="text-center">{{#if this.status }}已出租{{else}}未出租{{/if}}</td>
-            <td scope="col" class="text-center d-flex flex-grow-1">
-              <div class="w-50 me-2 "><a class="btn btn-outline-warning w-100 flex-grow-1" href="./units/{{ this.id }}">detail</a>
-              </div>
-              <div class="w-50"><a class="btn btn-outline-warning w-100" href="./units/{{ this.id }}/edit">edit</a>
+          <tr class="text-center">
+            <td class="col col-md-2">{{ this.city }}</td>
+            <td class="col col-md-2">{{ this.address }}</td>
+            <td class="col col-md-2">{{#if this.endDate }}{{formatDate this.endDate}}{{else}}{{/if}}</td>
+            <td class="col">{{ this.income }}</td>
+            <td class="col">{{ this.annualIncome }}</td>
+            <td class="col">{{ this.Agency.name }}</td>
+            <td class="col">{{#if this.status }}已出租{{else}}未出租{{/if}}</td>
+            <td class="col">
+              <div class="row">
+                <div class="col">
+                  <a class="btn btn-outline-warning w-100 flex-grow-1" href="./units/{{ this.id }}">detail</a>
+                </div>
+                <div class="col">
+                  <a class="btn btn-outline-warning w-100" href="./units/{{ this.id }}/edit">edit</a>
+                </div>
               </div>
             </td>
           </tr>
