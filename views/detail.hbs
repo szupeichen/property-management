@@ -1,28 +1,47 @@
-<div class="mb-3">
-  <a href="/" class="btn btn-warning me-3">回首頁</a>
-  <a href="{{ unit.id }}/edit" class="btn btn-warning">修改</a>
+<div class="container">
+  {{!-- 回首頁按鈕 --}}
+  <div class="row my-3">
+    <div class="col-2">
+      <a href="/" class="btn btn-warning w-100">回首頁</a>
+    </div>
+    <div class="col-2">
+      <a href="{{ unit.id }}/edit" class="btn btn-warning w-100">修改</a>
+    </div>
+  </div>
+  {{!-- 資料顯示區 --}}
+  <div class="row">
+    <div class="col">
+      <table class="table">
+        <thead>
+          <tr scope="row" class="table-warning">
+            <th scope="col-4">縣市地址：{{unit.city}}{{unit.address}}</th>
+            <th scope="col-4 ">單月租金：{{unit.income}}</th>
+            <th scope="col-4">整年租金：{{unit.annualIncome}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr scope="row">
+            <td scope="col-4">租約起日：{{#if unit.startDate }}{{formatDate unit.startDate}}{{else}}{{/if}}
+            </td>
+            <td scope="col-4">租約訖日：{{#if unit.endDate }}{{formatDate unit.endDate}}{{else}}{{/if}}</td>
+            <td scope="col-4">出租狀態：{{#if unit.status }}已出租{{else}}未出租{{/if}}</td>
+          </tr>
+          <tr scope="row">
+            <td scope="col-4">服務仲介：{{unit.Agency.name}}</td>
+            <td scope="col-4">仲介公司：{{unit.Agency.company}}</td>
+            <td scope="col-4">仲介電話：{{unit.Agency.phoneNumber}}</td>
+          </tr>
+          <tr scope="row">
+            <td scope="col" colspan="3">備註項目：{{unit.note}}</td>
+          </tr>
+          <tr scope="row" class="table-secondary">
+            <td scope="col" colspan="3">Latest modified on {{formatDate unit.updatedAt}} by {{unit.User.name}}</td>
+          </tr>
+        </tbody>
+
+      </table>
+    </div>
+
+  </div>
+
 </div>
-<table class="table w-100">
-  <tr class="table-warning row mx-1"> 
-    <th class="col-4">縣市地址：{{unit.city}}{{unit.address}}</th>
-    <th class="col-4 ">單月租金：{{unit.income}}</th>
-    <th class="col-4">整年租金：{{unit.annualIncome}}</th>
-  </tr>
-  <tr class="row mx-1">
-    <td class="col-4">租約起日：{{#if unit.startDate }}{{formatDate unit.startDate}}{{else}}{{/if}}
-      </td>
-    <td class="col-4">租約訖日：{{#if unit.endDate }}{{formatDate unit.endDate}}{{else}}{{/if}}</td>
-    <td class="col-4">出租狀態：{{#if unit.status }}已出租{{else}}未出租{{/if}}</td>
-  </tr>
-  <tr class="row mx-1">
-    <td class="col-4">服務仲介：{{unit.Agency.name}}</td>
-    <td class="col-4">仲介公司：{{unit.Agency.company}}</td>
-    <td class="col-4">仲介電話：{{unit.Agency.phoneNumber}}</td>
-  </tr>
-  <tr class="row mx-1">
-    <td>備註項目：{{unit.note}}</td>
-  </tr>
-  <tr class="row mx-1 table-secondary">
-    <td>Latest modified on {{formatDate unit.updatedAt}} by {{unit.User.name}}</td>
-  </tr>
-</table>
