@@ -171,6 +171,12 @@ const unitController = {
       next(err)
     }
   },
+  // filteredResults
+  // unitsFilterResults: async (req, res, next) => {
+  //   const cityClause = 
+
+  // }
+  // ,
   // filter
   unitsFilterByAgency: async (req, res, next) => {
     const clause = req.query.selectedAgencyId

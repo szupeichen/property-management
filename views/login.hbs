@@ -1,38 +1,41 @@
-<div class="d-flex flex-row justify-content-center">
-  <div class="col-md-4 d-flex flex-column justify-content-center">
-    <h1 class="display-1">歡迎登入
-      <h1>
-        <small class="text-body-secondary">房產資訊管理系統</small>
-      </h1>
-    </h1>
-  </div>
-  <div class="col-md-4">
-    <div class="card card-body">
-      <h1 class="text-center mb-4">Login</h1>
-      <form action="/users/login" method="POST">
-        <div class="form-floating mb-3">
-          <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email" value="{{ email }}"
-            required>
-          <label for="email" class="form-label">Enter Email</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password"
-            required>
-          <label for="password" class="form-label">Enter Password</label>
-        </div>
-        <div class="d-flex align-items-center mb-4">
-          <input class="me-1" type="checkbox" name="rememberUser">
-          <p class="mb-0">記住我的Email</p>
-        </div>
-        <div class="d-flex" style="height: 50px">
-          <button type="submit" class="d-block w-50 mb-2 me-2 btn btn-warning"><span>Login</span></button>
-          <a href="/auth/facebook" class="d-block w-50 mb-2 ms-2 btn btn-info align-middle"><span
-              class="align-middle">Facebook</span></a>
-        </div>
-      </form>
-      <p class="lead mt-4">
-        No Account? <a href="/users/register">Register</a>
-      </p>
+<div class="h-100 container-fluid d-flex justify-content-center">
+  <div class="row">
+    {{!-- 歡迎登入說明字樣 --}}
+    <div class="col-12 col-lg-6 d-flex align-items-center justify-content-center">
+      <div class="row">
+        <h1 class="col d-flex justify-content-center flex-fill display-1">歡迎登入</h1>    
+        <h2 class="col d-flex justify-content-center">房產資訊管理系統</h2>
+      </div>
+    </div>
+    {{!-- 登入功能卡片 --}}
+    <div class="col-12 col-lg-6 d-flex align-items-center justify-content-center">
+      <div class="card card-body">
+        <h1 class="text-center mb-4">Login</h1>
+        <form action="/users/login" method="POST">
+          <div class="form-floating mb-3">
+            <input type="email" id="email" name="email" class="form-control" placeholder="Enter Email"
+              value="{{ email }}" required>
+            <label for="email" class="form-label">Enter Email</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="password" id="password" name="password" class="form-control" placeholder="Enter Password"
+              required>
+            <label for="password" class="form-label">Enter Password</label>
+          </div>
+          <div class="d-flex align-items-center mb-4">
+            <input class="me-1" type="checkbox" name="rememberUser">
+            <p class="mb-0">記住我的Email</p>
+          </div>
+          <div class="d-flex" style="height: 50px">
+            <button type="submit" class="d-block w-50 mb-2 me-2 btn btn-warning"><span>Login</span></button>
+            <a href="/auth/facebook" class="d-block w-50 mb-2 ms-2 btn btn-info align-middle"><span
+                class="align-middle">Facebook</span></a>
+          </div>
+        </form>
+        <p class="lead mt-4">
+          No Account? <a href="/users/register">Register</a>
+        </p>
+      </div>
     </div>
   </div>
 </div>

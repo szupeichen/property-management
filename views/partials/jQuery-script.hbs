@@ -43,7 +43,7 @@
           success: function (data) {
             const tbody = $('table tbody');
             tbody.empty();
-            if (data.length > 0) {
+            if (data.length !== 0) {
               // 如果有資料，使用 Handlebars 模板渲染表格
               const html = template({ units: data });
               tbody.append(html);
