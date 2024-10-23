@@ -188,35 +188,25 @@ const unitController = {
       const limit = DEFAULT_LIMIT
       const offset = getOffset(limit, page)
       // 準備查詢的 where 條件
-      const whereConditions = {
-        [Op.or]: [] // 使用數組來存儲 or 的條件
-      }
-      // 檢查 cityFilter 和 agencyFilter 是否有被選擇，若有則添加到查詢條件中
+      const whereConditions = {};
+      // 檢查依縣市和依房仲篩選
       if (cityFilter && cityFilter !== 'null') {
-        whereConditions.city = cityFilter
+        whereConditions.city = cityFilter;
       }
       if (agencyFilter && agencyFilter !== 'null') {
-        whereConditions.agencyId = agencyFilter
+        whereConditions.agencyId = agencyFilter;
       }
-      // 模糊搜尋
-      const orConditions = []
+      // 模糊搜尋,檢查關鍵字是否有值
       if (keyword && keyword.trim() !== '') {
-        orConditions.push(
+        whereConditions[Op.or] = [
           { city: { [Op.like]: `%${keyword}%` } },
           { address: { [Op.like]: `%${keyword}%` } },
           { note: { [Op.like]: `%${keyword}%` } }
-        )
+        ];
       }
-      console.log('orCondition')
-      console.log(orConditions)
-      // 如果有 OR 條件，才加到 whereConditions 中
-      if (orConditions.length > 0) {
-        whereConditions[Op.or] = orConditions
-      }
+      console.log('whereCondition')
       console.log(whereConditions)
-      // 如果 whereConditions 是空物件，設為 null 以避免篩選條件
-      const whereClause = whereConditions || null
-      // 驗證sortByDate是否有選，有才成立查詢條件
+      // 檢查sortByDate是否有選，有才成立查詢條件
       const orderConditions = []
       if (sortByDate === 'ASC' || sortByDate === 'DESC') {
         orderConditions.push(['endDate', sortByDate])
@@ -228,7 +218,7 @@ const unitController = {
         include: [Agency],
         limit,
         offset,
-        where: whereClause,
+        where: whereConditions,
         order: orderConditions
       })
       // 依房仲篩選的選項
@@ -241,8 +231,6 @@ const unitController = {
       })
       // 渲染結果
       const unit = units.rows
-      console.log('來')
-      console.log(unit)
       res.render('index', { units: unit, pagination: getPagination(limit, page, units.count), Agencies, unitCriteria })
     } catch (err) {
       next(err)
