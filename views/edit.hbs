@@ -1,22 +1,31 @@
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"
-  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-
-{{!-- html --}}
-<form action="/units/{{unit.id}}?_method=PUT" method="POST">
-  <div>
-    <a href="/" class="btn btn-warning mb-3 me-3">回首頁</a>
-    <a href="/units/{{unit.id}}" class="btn btn-warning mb-3">回detail</a>
-  </div>
-  <div class="mb-4">
-    <h2 class="text-start">編輯房產資訊</h1>
-  </div>
-
-  {{> units-form}}
-
-  <div class="text-center">
-    <button class="btn btn-warning mb-3 w-100 row" type="submit">儲存</button>
-  </div>
-</form>
-
+<div class="container">
+  <form action="/units/{{unit.id}}?_method=PUT" method="POST">
+    {{!-- 回首頁按鈕 --}}
+    <div class="row my-3">
+      <div class="col-5 col-sm-2">
+        <a href="/" class="btn  btn-warning w-100">回首頁</a>
+      </div>
+      <div class="col-5 col-sm-2">
+        <a href="/units/{{unit.id}}" class="btn btn-warning w-100">回detail</a>
+      </div>
+    </div>
+    {{!-- page title --}}
+    <div class="row">
+      <h2 class="col">編輯房產資訊</h2>
+    </div>
+    {{!-- 資料修改區 --}}
+    <div class="row">
+      <div class="col">
+        {{> units-form}}
+      </div>
+    </div>
+    {{!-- 儲存按鈕 --}}
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-warning w-100" type="submit">儲存</button>
+      </div>
+    </div>
+  </form>
+</div>
 {{!-- jQuery --}}
 {{> jQuery-script}}
