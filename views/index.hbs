@@ -13,42 +13,40 @@
     {{/if}}
   </div>
   {{!-- 篩選按鈕 --}}
+  <form action="/search" method="get">
   <div class="row mb-3">
     <div class="col-3 col-sm-2">
-      <input type="text" class="form-control" placeholder="輸入關鍵字" aria-label="searchBar"
+      <input type="text" class="form-control" placeholder="輸入關鍵字" name="keyword" aria-label="searchBar"
         aria-describedby="basic-addon1">
     </div>
     <div class="col-3 col-sm-2">
-      <select class="form-select bg-light.bg-gradient" id="counterFilter" name="counterFilter" aria-label="filter">
-        <option selected>依縣市篩選</option>
-        {{#each Units}}
-        <option value="{{this.city.id}}"></option>
+      <select class="form-select bg-light.bg-gradient" name="cityFilter" aria-label="filter">
+        <option value="null" selected>依縣市篩選</option>
+        {{#each unitCriteria}}
+        <option value="{{this.city}}">{{this.city}}</option>
         {{/each}}
       </select>
     </div>
     <div class="col-3 col-sm-2">
-      <select class="form-select bg-light.bg-gradient" id="agencyFilter" name="agencyFilter" aria-label="agencyFilter">
-        <option selected>依房仲篩選</option>
+      <select class="form-select bg-light.bg-gradient" name="agencyFilter" aria-label="agencyFilter">
+        <option value="null">依房仲篩選</option>
         {{#each Agencies}}
         <option value="{{this.id}}">{{this.name}}</option>
         {{/each}}
       </select>
     </div>
     <div class="col-3 col-sm-2">
-      <select class="form-select bg-light.bg-gradient" aria-label="dateFilter">
-        <option selected>日期排序</option>
-        <option value="">日期近至遠</option>
-        <option value="1">日期遠至近</option>
+      <select class="form-select bg-light.bg-gradient" name="sortByDate" aria-label="dateFilter">
+        <option value="null" selected>租約迄日排序</option>
+        <option value="ASC">日期近至遠</option>
+        <option value="DESC">日期遠至近</option>
       </select>
     </div>
     <div class="col-3 col-sm-2">
-      <form action="/" method="get">
-        <button type="button" class="btn btn-secondary w-100">搜索</button>
-      </form>
+      <button type="submit" class="btn btn-secondary w-100" id="search">搜索</button>
     </div>
-
-
   </div>
+  </form>
   {{!-- 資料顯示區 --}}
   {{!-- 以row包住一個col來讓寬度能自動和前面的按鈕對齊 --}}
   <div class="row">

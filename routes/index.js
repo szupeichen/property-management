@@ -16,7 +16,7 @@ router.use('/units', units)
 router.use('/', generalErrorHandler)
 
 router.get('/getAgencyDetail', unitController.getAgencyDetail)
-router.get('/unitsFilterByAgency', unitController.unitsFilterByAgency)
+router.get('/search', unitController.search)
 router.get('/', authenticator, unitController.unitsAll)
 
 module.exports = router
