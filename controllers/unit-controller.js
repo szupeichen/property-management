@@ -205,8 +205,6 @@ const unitController = {
           { note: { [Op.like]: `%${keyword}%` } }
         ]
       }
-      console.log('whereCondition')
-      console.log(whereConditions)
       // 檢查sortByDate是否有選，有才成立查詢條件
       const orderConditions = []
       if (sortByDate === 'ASC' || sortByDate === 'DESC') {
