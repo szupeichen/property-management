@@ -182,8 +182,6 @@ const unitController = {
   // 按下search後
   search: async (req, res, next) => {
     const { keyword, cityFilter, agencyFilter, sortByDate } = req.query
-    console.log('req.query')
-    console.log(req.query)
     try {
       // define pagination
       const DEFAULT_LIMIT = 9
