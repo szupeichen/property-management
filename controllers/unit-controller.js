@@ -27,8 +27,11 @@ const unitController = {
         raw: true
       })
       // 依縣市篩選的選項
+      // 根據 city 欄位進行group分組，並返回每組的第一筆記錄,使篩選的選項不重複
       const unitCriteria = await Unit.findAll({
-        raw: true
+        raw: true,
+        attributes: ['city'],
+        group: ['city']
       })
       const unit = units.rows
       res.render('index', { units: unit, pagination: getPagination(limit, page, units.count), Agencies, unitCriteria })
@@ -188,13 +191,13 @@ const unitController = {
       const limit = DEFAULT_LIMIT
       const offset = getOffset(limit, page)
       // 準備查詢的 where 條件
-      const whereConditions = {};
+      const whereConditions = {}
       // 檢查依縣市和依房仲篩選
       if (cityFilter && cityFilter !== 'null') {
-        whereConditions.city = cityFilter;
+        whereConditions.city = cityFilter
       }
       if (agencyFilter && agencyFilter !== 'null') {
-        whereConditions.agencyId = agencyFilter;
+        whereConditions.agencyId = agencyFilter
       }
       // 模糊搜尋,檢查關鍵字是否有值
       if (keyword && keyword.trim() !== '') {
@@ -202,7 +205,7 @@ const unitController = {
           { city: { [Op.like]: `%${keyword}%` } },
           { address: { [Op.like]: `%${keyword}%` } },
           { note: { [Op.like]: `%${keyword}%` } }
-        ];
+        ]
       }
       console.log('whereCondition')
       console.log(whereConditions)
@@ -226,8 +229,11 @@ const unitController = {
         raw: true
       })
       // 依縣市篩選的選項
+      // 根據 city 欄位進行group分組，並返回每組的第一筆記錄,使篩選的選項不重複
       const unitCriteria = await Unit.findAll({
-        raw: true
+        raw: true,
+        attributes: ['city'],
+        group: ['city']
       })
       // 渲染結果
       const unit = units.rows
