@@ -1,3 +1,5 @@
+維修公告：因免費DB到期，目前尋找新的DB中，暫時無法登入。
+
 # 房產資訊管理系統 property-management
 #### 輕鬆擺脫繁雜Excel的租賃管理行政工具  
 點擊連結進入：https://property-management-dcb0.onrender.com  
